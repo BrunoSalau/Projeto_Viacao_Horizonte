@@ -3,6 +3,8 @@
 
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
+//npx prisma migrate dev --name add-campo-email
+
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -29,12 +31,50 @@ model Motorista{
   telefone Int
   usuario_id Int
   usuario Usuario @relation(fields: [usuario_id], references: [id])
+  viagem Viagem[]
 }
 
 model Supervisor{
+  id Int @id @default(autoincrement())
   nome String
   cpf Int @unique
   telefone Int
   usuario_id Int
   usuario Usuario @relation(fields: [usuario_id], references: [id])
+  viagem Viagem[]
+}
+
+model Rota{
+  id Int @id @default(autoincrement())
+  origem String
+  destino String
+  distancia Float
+  viagem Viagem[]
+}
+
+model Veiculo{
+  id Int @id @default(autoincrement())
+  modelo String
+  marca String
+  placa String
+  capacidade Int
+  quilometragem Float
+  status String
+  imagem String
+  viagem Viagem[]
+}
+model Viagem{
+  id Int @id @default(autoincrement())
+  status_viagem String
+  token_finalizacao String
+  dataSaida DateTime
+  dataChegada DateTime
+  motorista_id Int
+  motorista Motorista @relation(fields: [motorista_id], references: [id])
+  supervisor_id Int
+  supervisor Supervisor @relation(fields: [supervisor_id], references: [id])
+  veiculo_id Int
+  veiculo Veiculo @relation(fields: [veiculo_id], references: [id])
+  rota_id Int
+  rota Rota @relation(fields: [rota_id], references: [id])
 }
