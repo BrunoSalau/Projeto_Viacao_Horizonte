@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Bem vindo</h1>
+    <h2>Criar Motorista</h2>
+    <form action="/criarMotorista" method="post">
+        <label for="">Nome:</label>
+        <input type="text" name="nome" placeholder="Digite o nome..." required>
+        <label for="">Cpf:</label>
+        <input type="text" name="cpf" placeholder="Digite o cpf..." required>
+        <label for="">Senha:</label>
+        <input type="text" name="senha" placeholder="Digite a senha..." required>
+        <label for="">Cnh:</label>
+        <input type="text" name="cnh" placeholder="Digite a cnh..." required>
+        <label for="">Telefone:</label>
+        <input type="text" name="telefone" placeholder="Digite o telefone..." required>
+
+        <br>
+
+        <label>
+            <input type="radio" name="opcao" value="Supervisor">
+            Criar Supervisor
+        </label>
+
+        <br>
+
+        <label>
+            <input type="radio" name="opcao" value="Motorista">
+            Criar Motorista
+        </label>
+
+        <br>
+
+        <button>Criar</button>
+    </form>
+
+    
+
+    ===========================================================
+
+    <h2>Listar Usuario</h2>
+    <form action="/listarMotoristas" method="post">
+        <label>
+            <input type="radio" name="opcao2" value="Supervisor">
+            Listar Supervisor
+        </label>
+
+        <label>
+            <input type="radio" name="opcao2" value="Motorista">
+            Listar Motorista
+        </label>
+
+        <label>
+            <input type="radio" name="opcao2" value="Todos">
+            Listar Todos
+        </label>
+        <button>Buscar</button>
+    </form>
+
+    
+    ===========================================================
+
+
+    <h2>Deletar Usuario</h2>
+    <form action="/deletarTudo" method="post">
+        <label for="cpf">Cpf:</label>
+        <input type="text" name="cpf" placeholder="Digite o cpf..." required>
+        <button>Deletar</button>
+    </form>
+
+</body>
+</html>
