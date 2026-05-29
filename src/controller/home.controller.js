@@ -5,8 +5,11 @@ import { modelCriarSupervisor,modelListarSupervisores,modelBuscarSupervisorCPF, 
 
 
 export function mostrar(req,res){
-    res.render('index');
+    res.render('login');
 }
+
+
+
 //MOTORISTA--------------------------------------------
 export async function criarMotorista(req,res){
     

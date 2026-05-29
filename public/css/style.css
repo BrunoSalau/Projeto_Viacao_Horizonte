@@ -1,0 +1,60 @@
+body {
+    background-image: url('/img/bus.gif');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100vh; 
+}
+.img-glow {
+  /* Altere a cor do rgba() para a cor desejada do brilho */
+  box-shadow: 0 0 15px rgba(247, 242, 0, 0.911), 0 0 30px rgba(253, 249, 13, 0.4);
+}
+.bg-dark2{
+    background: rgba(48, 46, 46, 0.89);
+}
+#botao1:hover{
+    transform: translateY(-10px);
+    transition: 0.5s;
+    box-shadow: 0 0 10px rgba(247, 242, 0, 0.911), 0 0 10px rgba(253, 249, 13, 0.4);
+}
+#botao1:not(:hover){
+    transform: translateY(0px);
+    transition: 0.5s;
+}
+.boxShadow{
+    box-shadow: 0px 0px 10px 5px rgba(31, 31, 30, 0.911);
+}
+.form-control:focus{
+    border-color: rgb(247, 242, 0, 0.911);
+    box-shadow: 0 0 5px rgb(247, 242, 0, 0.911);
+}
+.form-errado:focus{
+    border-color: rgba(255, 30, 0, 0.911);
+    box-shadow: 0 0 5px rgba(247, 0, 0, 0.911);
+}
+#msgCpf, #msgSenha{
+    font-size: 12px;
+}
+#olho{
+    width: 25px;
+}
+#logo{
+    animation: flutuar 3s ease-in-out infinite;
+}
+
+@keyframes flutuar {
+
+    0%{
+        transform: scale(1);
+    }
+
+    50%{
+        transform: scale(1.05);
+    }
+
+    100%{
+        transform: scale(1);
+    }
+
+}
