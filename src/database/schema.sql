@@ -1,6 +1,7 @@
 --DROP TABLE supervisor;
 --DROP TABLE motorista;
 --DROP TABLE usuario;
+--DROP TABLE veiculo;
 
 CREATE TABLE IF NOT EXISTS usuario(
     id SERIAL PRIMARY KEY,
@@ -28,5 +29,14 @@ CREATE TABLE IF NOT EXISTS supervisor(
     FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 );
 
+CREATE TABLE IF NOT EXISTS veiculo(
+    id SERIAL PRIMARY KEY,
+    placa VARCHAR(10) UNIQUE NOT NULL,
+    modelo VARCHAR(100) NOT NULL,
+    marca VARCHAR(100) NOT NULL,
+    ano INTEGER NOT NULL,
+    capacidade_passageiros INTEGER,
+    status VARCHAR(20) DEFAULT 'Disponivel'
+);
 
 
