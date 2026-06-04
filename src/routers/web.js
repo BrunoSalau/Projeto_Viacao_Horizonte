@@ -1,16 +1,11 @@
-import { mostrar, criarMotorista, listarMotoristas, deletarTudo } from '../controller/home.controller.js'
-import {cadastro} from '../controller/cadastro.controller.js'
+import { mostrar } from '../controllers/login.controller.js'
+import {controllerUsuario} from '../controllers/usuario.controller.js'
+import {cadastro} from '../controllers/cadastro.controller.js'
 import express from 'express';
 
 const router = express.Router();
 
 router.get('/',mostrar);
-
-router.post('/criarMotorista',criarMotorista)
-
-router.post('/listarMotoristas',listarMotoristas)
-
-router.post('/deletarTudo',deletarTudo)
 
 router.get('/cadastro',cadastro)
 

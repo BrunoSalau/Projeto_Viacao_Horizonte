@@ -8,7 +8,7 @@
 <body>
     <h1>Bem vindo</h1>
     <h2>Criar Motorista</h2>
-    <form action="/criarMotorista" method="post">
+    <form action="/criarUsuario" method="post">
         <label for="">Nome:</label>
         <input type="text" name="nome" placeholder="Digite o nome..." required>
         <label for="">Cpf:</label>
@@ -44,7 +44,7 @@
     ===========================================================
 
     <h2>Listar Usuario</h2>
-    <form action="/listarMotoristas" method="post">
+    <form action="/listarUsuarios" method="post">
         <label>
             <input type="radio" name="opcao2" value="Supervisor">
             Listar Supervisor
@@ -67,7 +67,7 @@
 
 
     <h2>Deletar Usuario</h2>
-    <form action="/deletarTudo" method="post">
+    <form action="/deletarUsuario" method="post">
         <label for="cpf">Cpf:</label>
         <input type="text" name="cpf" placeholder="Digite o cpf..." required>
         <button>Deletar</button>

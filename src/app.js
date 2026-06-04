@@ -1,8 +1,9 @@
 import express from 'express';
 import routes from './routers/web.js'
-import routesUsuario from './routers/login.router.js'
+import usuario from './routers/usuario.router.js'
 
 const app = express()
+
 
 app.set('view engine','ejs');
 
@@ -16,6 +17,7 @@ app.use(express.static('public'));
 
 app.use('/', routes);
 
-app.use('/', routesUsuario);
+app.use('/', usuario);
+
 
 export default app;
