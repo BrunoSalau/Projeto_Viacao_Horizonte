@@ -1,11 +1,11 @@
---DROP TABLE supervisor;
---DROP TABLE motorista;
---DROP TABLE usuario;
---DROP TABLE veiculo;
---DROP TABLE rota;
---DROP TABLE viagem;
---DROP TABLE manutencao;
---DROP TABLE abastecimento;
+--DROP TABLE IF EXISTS abastecimento;
+--DROP TABLE IF EXISTS manutencao;
+--DROP TABLE IF EXISTS viagem;
+--DROP TABLE IF EXISTS rota;
+--DROP TABLE IF EXISTS veiculo;
+--DROP TABLE IF EXISTS supervisor;
+--DROP TABLE IF EXISTS motorista;
+--DROP TABLE IF EXISTS usuario;
 
 CREATE TABLE IF NOT EXISTS usuario(
     id SERIAL PRIMARY KEY,
@@ -50,10 +50,12 @@ CREATE TABLE IF NOT EXISTS rota(
 );
 CREATE TABLE IF NOT EXISTS viagem(
     id SERIAL PRIMARY KEY,
-    id_veiculo INTEGER REFERENCES veiculo(id),
-    id_rota INTEGER REFERENCES rota(id),
     data_viagem DATE NOT NULL,
-    status VARCHAR(30) DEFAULT 'Agendada'
+    status VARCHAR(30) DEFAULT 'Agendada',
+    motorista_id INTEGER NOT NULL REFERENCES motorista(id),
+    supervisor_id INTEGER NOT NULL REFERENCES supervisor(id),
+    rota_id INTEGER NOT NULL REFERENCES rota(id),
+    veiculo_id INTEGER NOT NULL REFERENCES veiculo(id)
 );
 CREATE TABLE IF NOT EXISTS manutencao(
     id SERIAL PRIMARY KEY,
