@@ -1,6 +1,6 @@
 import { pool } from '../config/db.js'
 
-export async function modelCriarSupervisor(nome,cpf,telefone,usuario_id) {
+export async function modelCriarSupervisor(nome, cpf, telefone, usuario_id) {
     const result = await pool.query(
         `
         INSERT INTO supervisor(nome,cpf,telefone,usuario_id)
