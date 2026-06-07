@@ -1,3 +1,5 @@
 import app from './src/app.js'
 
-app.listen('3000',()=>console.log('Servidor Rodando 🚀'));
+const PORT = 3000;
+
+app.listen(PORT,()=>console.log('Servidor Rodando 🚀'));
