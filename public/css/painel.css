@@ -1,0 +1,289 @@
+/* =============================================
+   VARIÁVEIS E BASE
+   ============================================= */
+:root {
+    --sidebar-width-full: 220px;
+    --sidebar-width-icons: 64px;
+    --sidebar-bg: rgb(13, 14, 19);
+    --nav-bg: rgb(21, 22, 29);
+    --transition-speed: 0.3s;
+}
+
+/* =============================================
+   CORES E UTILITÁRIOS (preservados do original)
+   ============================================= */
+.bg-dark2 {
+    background: var(--sidebar-bg);
+}
+.bg-dark3 {
+    background: var(--nav-bg);
+}
+.text-yellow {
+    color: yellow;
+}
+.text-white2 {
+    color: rgb(185, 185, 185);
+}
+.fs-7 {
+    font-size: 10px;
+}
+
+/* =============================================
+   LAYOUT PRINCIPAL
+   ============================================= */
+body {
+    overflow-x: hidden;
+}
+
+.main-content {
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* =============================================
+   SIDEBAR — ESTADO PADRÃO (desktop largo)
+   ============================================= */
+.sidebar {
+    width: var(--sidebar-width-full);
+    min-width: var(--sidebar-width-full);
+    max-width: var(--sidebar-width-full);
+    flex-shrink: 0;
+    transition: width var(--transition-speed) ease,
+                min-width var(--transition-speed) ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Cabeçalho da sidebar */
+.sidebar-header {
+    overflow: hidden;
+}
+
+#img-vh {
+    width: 50%;
+    max-width: 80px;
+    display: block;
+}
+
+.sidebar-brand-text {
+    transition: opacity var(--transition-speed) ease;
+    white-space: nowrap;
+}
+
+/* Seção de navegação */
+.sidebar-nav-section {
+    margin: 0 8px;
+    transition: margin var(--transition-speed) ease;
+}
+
+/* Item de menu: ícone + label lado a lado */
+.nav-item-link {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.nav-item{
+    border-radius: 20px;
+    width: 96%;
+}
+.nav-item:hover .nav-label{
+    color: yellow;
+}
+.nav-item:hover{
+    background: linear-gradient(150deg,rgba(58, 57, 49, 0.306),rgba(83, 90, 2, 0.205));
+    transition: 0.5s;
+    transform: translateX(10px);
+    box-shadow: -1px 0px 2px 0px rgb(242, 255, 0);
+    color: rgb(221, 254, 1);
+}
+.nav-item:not(:hover){
+    transition: 0.5s;
+}
+
+.nav-icon {
+    width: 25px;
+    min-width: 25px;   /* garante que o ícone nunca encolha */
+    height: 25px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.nav-label {
+    overflow: hidden;
+    transition: opacity var(--transition-speed) ease,
+                max-width var(--transition-speed) ease;
+    max-width: 160px;
+    opacity: 1;
+}
+
+/* Botões mobile — ocultos no desktop */
+.hamburger-btn,
+.close-btn {
+    display: none;
+}
+
+/* =============================================
+   SIDEBAR — MODO SOMENTE ÍCONES
+   Ativa em telas onde a sidebar começaria a
+   comprimir o texto (≤ 900px)
+   ============================================= */
+@media (max-width: 900px) and (min-width: 577px) {
+
+    .sidebar {
+        width: var(--sidebar-width-icons);
+        min-width: var(--sidebar-width-icons);
+        max-width: var(--sidebar-width-icons);
+    }
+
+    /* Oculta os textos de marca */
+    .sidebar-brand-text {
+        opacity: 0;
+        pointer-events: none;
+        max-height: 0;
+        overflow: hidden;
+    }
+
+    /* Centraliza o logo */
+    .sidebar-header {
+        display: flex;
+        justify-content: center;
+        padding: 16px 8px !important;
+        margin: 0 !important;
+    }
+
+    #img-vh {
+        width: 36px;
+        max-width: 36px;
+    }
+
+    /* Oculta labels dos itens do menu */
+    .nav-label {
+        opacity: 0;
+        max-width: 0;
+        overflow: hidden;
+    }
+
+    /* Centraliza ícones */
+    .nav-item-link {
+        justify-content: center;
+        margin: 8px auto !important;
+        padding: 6px !important;
+    }
+
+    .sidebar-nav-section {
+        margin: 0 4px;
+    }
+
+    /* Tooltip nativo ao passar o mouse */
+    .nav-item-link[title] {
+        position: relative;
+    }
+}
+
+/* =============================================
+   SIDEBAR — MODO MOBILE (≤ 576px)
+   Sidebar oculta por padrão; abre como overlay
+   ============================================= */
+@media (max-width: 576px) {
+
+    /* Botão hambúrguer visível */
+    .hamburger-btn {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        position: fixed;
+        top: 14px;
+        left: 14px;
+        z-index: 1100;
+        background: var(--sidebar-bg);
+        border: none;
+        border-radius: 6px;
+        padding: 8px 10px;
+        cursor: pointer;
+        transition: background var(--transition-speed);
+    }
+
+    .hamburger-btn span {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: #fff;
+        border-radius: 2px;
+        transition: transform var(--transition-speed), opacity var(--transition-speed);
+    }
+
+    /* Animação hambúrguer → X quando aberto */
+    .hamburger-btn.is-open span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+    .hamburger-btn.is-open span:nth-child(2) {
+        opacity: 0;
+    }
+    .hamburger-btn.is-open span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* Overlay escuro atrás da sidebar */
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        z-index: 1040;
+        transition: opacity var(--transition-speed);
+    }
+
+    .sidebar-overlay.is-visible {
+        display: block;
+    }
+
+    /* Sidebar posicionada fora da tela por padrão */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: var(--sidebar-width-full) !important;
+        min-width: var(--sidebar-width-full) !important;
+        max-width: var(--sidebar-width-full) !important;
+        transform: translateX(-100%);
+        transition: transform var(--transition-speed) ease;
+        z-index: 1050;
+        overflow-y: auto;
+    }
+
+    /* Sidebar aberta */
+    .sidebar.is-open {
+        transform: translateX(0);
+    }
+
+    /* Botão fechar dentro da sidebar */
+    .close-btn {
+        display: block;
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.2);
+        color: #fff;
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+        cursor: pointer;
+        line-height: 1;
+        transition: background var(--transition-speed);
+    }
+
+    .close-btn:hover {
+        background: rgba(255,255,255,0.1);
+    }
+
+    /* Conteúdo principal ocupa tela inteira */
+    .main-content {
+        padding-top: 56px; /* espaço para o botão hambúrguer */
+    }
+}

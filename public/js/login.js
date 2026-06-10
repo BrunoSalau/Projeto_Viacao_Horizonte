@@ -43,7 +43,7 @@ senhaInput.addEventListener('input',()=>{
         msgSenha.innerHTML = '<br>';
     }
     if(senhaInput.value){
-        olho.innerHTML = "<img id='olho' class='img-fluid' src='img/olhof.png' alt=''></img>";
+        olho.innerHTML = "<img id='olho' class='img-fluid' src='img/icons/olhof.png' alt=''></img>";
     }else{
         olho.innerHTML = '';
     }
@@ -153,12 +153,12 @@ form.addEventListener('submit', async (event)=>{
 let aberto = false;
     olho.addEventListener('click',()=>{
             if(!aberto){
-                olho.innerHTML = "<img id='olho' class='img-fluid' src='img/olho.png' alt=''></img>";
+                olho.innerHTML = "<img id='olho' class='img-fluid' src='img/icons/olho.png' alt=''></img>";
                 aberto = true;
                 senhaInput.type = 'text';
             }
             else if(aberto){
-                olho.innerHTML = "<img id='olho' class='img-fluid' src='img/olhof.png' alt=''></img>";
+                olho.innerHTML = "<img id='olho' class='img-fluid' src='img/icons/olhof.png' alt=''></img>";
                 aberto = false;
                 senhaInput.type = 'password';
             }   
