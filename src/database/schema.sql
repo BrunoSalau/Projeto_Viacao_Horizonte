@@ -1,7 +1,11 @@
---DROP TABLE supervisor;
---DROP TABLE motorista;
---DROP TABLE usuario;
---DROP TABLE veiculo;
+--DROP TABLE IF EXISTS abastecimento;
+--DROP TABLE IF EXISTS manutencao;
+--DROP TABLE IF EXISTS viagem;
+--DROP TABLE IF EXISTS rota;
+--DROP TABLE IF EXISTS veiculo;
+--DROP TABLE IF EXISTS supervisor;
+--DROP TABLE IF EXISTS motorista;
+--DROP TABLE IF EXISTS usuario;
 
 CREATE TABLE IF NOT EXISTS usuario(
     id SERIAL PRIMARY KEY,
@@ -36,7 +40,34 @@ CREATE TABLE IF NOT EXISTS veiculo(
     marca VARCHAR(100) NOT NULL,
     ano INTEGER NOT NULL,
     capacidade_passageiros INTEGER,
+    quilometragem INTEGER DEFAULT 0,
+    imagem TEXT,
     status VARCHAR(20) DEFAULT 'Disponivel'
+    
 );
-
-
+CREATE TABLE IF NOT EXISTS rota(
+    id SERIAL PRIMARY KEY,
+    origem VARCHAR(100) NOT NULL,
+    destino VARCHAR(100) NOT NULL,
+    distancia_km INTEGER NOT NULL
+);
+CREATE TABLE IF NOT EXISTS viagem(
+    id SERIAL PRIMARY KEY,
+    id_veiculo INTEGER REFERENCES veiculo(id),
+    id_rota INTEGER REFERENCES rota(id),
+    data_viagem DATE NOT NULL,
+    status VARCHAR(30) DEFAULT 'Agendada'
+);
+CREATE TABLE IF NOT EXISTS manutencao(
+    id SERIAL PRIMARY KEY,
+    id_veiculo INTEGER REFERENCES veiculo(id),
+    descricao TEXT NOT NULL,
+    data_manutencao DATE NOT NULL
+);
+CREATE TABLE IF NOT EXISTS abastecimento(
+    id SERIAL PRIMARY KEY,
+    id_veiculo INTEGER REFERENCES veiculo(id),
+    litros NUMERIC(10,2) NOT NULL,
+    valor NUMERIC(10,2) NOT NULL,
+    data_abastecimento DATE NOT NULL
+);

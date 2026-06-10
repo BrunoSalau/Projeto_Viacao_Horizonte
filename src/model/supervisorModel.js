@@ -42,5 +42,4 @@ export class modelSupervisor{
         );
         return result.rows[0];
     }
-
 }
