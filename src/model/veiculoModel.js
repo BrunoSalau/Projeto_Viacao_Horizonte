@@ -1,14 +1,13 @@
 import { pool } from '../config/db.js'
 
-export async function modelCriarVeiculo(placa, modelo, marca, ano, capacidade_passageiros){
+export async function modelCriarVeiculo(placa, modelo, marca, ano, capacidade_passageiros, quilometragem, imagem, status){
     
 
-
 const result = await pool.query(
-    `INSERT INTO VEICULO (placa, modelo, marca, ano, capacidade_passageiros)
-    VALUES ($1, $2, $3, $4, $5)
+    `INSERT INTO VEICULO (placa, modelo, marca, ano, capacidade_passageiros, quilometragem, imagem, status)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     RETURNING *`,
-    [placa, modelo, marca, ano, capacidade_passageiros]
+    [placa, modelo, marca, ano, capacidade_passageiros, quilometragem, imagem, status]
 );
 
 return result.rows[0];
@@ -33,7 +32,6 @@ export async function buscarVeiculoPlaca(placa){
 }
 
 export async function modelDeletarVeiculo(placa){
-
 
     const result = await pool.query(
         `DELETE FROM veiculo

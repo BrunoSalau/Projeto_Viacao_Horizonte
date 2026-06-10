@@ -40,7 +40,10 @@ CREATE TABLE IF NOT EXISTS veiculo(
     marca VARCHAR(100) NOT NULL,
     ano INTEGER NOT NULL,
     capacidade_passageiros INTEGER,
+    quilometragem INTEGER DEFAULT 0,
+    imagem TEXT,
     status VARCHAR(20) DEFAULT 'Disponivel'
+    
 );
 CREATE TABLE IF NOT EXISTS rota(
     id SERIAL PRIMARY KEY,
