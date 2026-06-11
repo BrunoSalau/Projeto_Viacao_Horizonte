@@ -32,6 +32,22 @@ export class modelMotorista{
             return result.rows[0];
         }
 
+        static async atualizarMotorista(nome, cpf, cnh, telefone, usuario_id) {
+            const result = await pool.query(
+                `
+                UPDATE motorista
+                SET nome = $1,
+                    cnh = $2,
+                    telefone = $3,
+                    usuario_id = $4
+                WHERE cpf = $5
+                RETURNING *
+                `,
+                [nome, cnh, telefone, usuario_id, cpf]
+            );
+            return result.rows[0];
+        }
+
         static async deletarMotorista(cpf) {
             const result = await pool.query(
                 `

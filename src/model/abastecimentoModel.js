@@ -23,6 +23,22 @@ export class modelAbastecimento{
     
         return result.rows;
     }
+
+    static async atualizarAbastecimento(id, id_veiculo, litros, valor, data_abastecimento){
+
+        const result = await pool.query(
+            `UPDATE abastecimento
+            SET id_veiculo = $1,
+                litros = $2,
+                valor = $3,
+                data_abastecimento = $4
+            WHERE id = $5
+            RETURNING *`,
+            [id_veiculo, litros, valor, data_abastecimento, id]
+        );
+
+    return result.rows[0];
+}
     
     static async deletarAbastecimento(id){
     

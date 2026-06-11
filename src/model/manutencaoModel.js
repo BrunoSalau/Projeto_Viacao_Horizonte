@@ -22,6 +22,21 @@ export class modelManutencao{
     
         return result.rows;
     }
+
+    static async atualizarManutencao(id, id_veiculo, descricao, data_manutencao){
+
+        const result = await pool.query(
+            `UPDATE manutencao
+            SET id_veiculo = $1,
+                descricao = $2,
+                data_manutencao = $3
+            WHERE id = $4
+            RETURNING *`,
+            [id_veiculo, descricao, data_manutencao, id]
+        );
+
+        return result.rows[0];
+    }
     
     static async deletarManutencao(id){
     

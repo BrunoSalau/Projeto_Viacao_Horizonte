@@ -22,6 +22,21 @@ export class modelViagem{
     
         return result.rows;
     }
+
+    static async atualizarViagem(id, id_veiculo, id_rota, data_viagem){
+    
+        const result = await pool.query(
+            `UPDATE viagem
+            SET id_veiculo = $1,
+                id_rota = $2,
+                data_viagem = $3
+            WHERE id = $4
+            RETURNING *`,
+            [id_veiculo, id_rota, data_viagem, id]
+        );
+    
+        return result.rows[0];
+    }
     
     static async deletarViagem(id){
     

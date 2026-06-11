@@ -97,7 +97,7 @@ async function mostrarVeiculos() {
                         <div class="vehicle-body">
                             <div class="vehicle-header">
                                 <span class="vehicle-model">${veiculo.modelo}</span>
-                                <span class="badge-status badge-operacao">Em operação</span>
+                                <span class="badge-status badge-operacao">${veiculo.status}</span>
                             </div>
                             <div class="vehicle-meta">Marca: <span>${veiculo.marca}</span></div>
                             <div class="vehicle-meta">Placa: <span>${veiculo.placa}</span></div>
@@ -116,8 +116,8 @@ async function mostrarVeiculos() {
                                         <circle cx="12" cy="12" r="10" />
                                         <polyline points="12 6 12 12 16 14" />
                                     </svg>
-                                    125.430 km
-                                </div>                             
+                                    ${veiculo.quilometragem} km
+                                </div>
                             </div>
                         </div>
                     </div>

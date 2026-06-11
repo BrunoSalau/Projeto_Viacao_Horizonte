@@ -31,6 +31,20 @@ export class modelUsuario{
         );
         return result.rows[0];
     }
+
+    static async atualizarUsuario(cpf, senha, tipo_usuario) {
+    const result = await pool.query(
+        `
+        UPDATE usuario
+        SET senha = $1,
+            tipo_usuario = $2
+        WHERE cpf = $3
+        RETURNING *
+        `,
+        [senha, tipo_usuario, cpf]
+    );
+    return result.rows[0];
+}
     
     static async deletarUsuario(cpf) {
         const result = await pool.query(

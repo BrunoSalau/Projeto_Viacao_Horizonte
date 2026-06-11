@@ -1,10 +1,14 @@
 import express from 'express';
 import routes from './routers/web.js'
-import usuario from './routers/usuario.router.js'
-import veiculo from './routers/veiculo.router.js'
-import painel from './routers/painel.router.js'
+import usuarioRouter   from './routers/usuario.router.js';
+import motoristaRouter from './routers/motorista.router.js';
+import supervisorRouter from './routers/supervisor.router.js';
+import rotaRouter from './routers/rota.router.js';
 
-const app = express()
+import veiculoRouter from './routers/veiculo.router.js';
+import painelRouter from './routers/painel.router.js';
+
+const app = express();
 
 
 app.set('view engine','ejs');
@@ -19,10 +23,16 @@ app.use(express.static('public'));
 
 app.use('/', routes);
 
-app.use('/', usuario);
+app.use('/usuario', usuarioRouter);
 
-app.use('/veiculo', veiculo)
+app.use('/motorista', motoristaRouter);
 
-app.use('/painel', painel)
+app.use('/supervisor', supervisorRouter);
+
+app.use('/rota',rotaRouter);
+
+app.use('/veiculo', veiculoRouter);
+
+app.use('/painel', painelRouter);
 
 export default app;

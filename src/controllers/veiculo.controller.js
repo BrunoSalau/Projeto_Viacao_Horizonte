@@ -15,7 +15,7 @@ export class controllerVeiculo{
             return res.send("Já existe um veiculo com essa placa!");
         };
         if(info){
-            modelVeiculo.criarVeiculo(info.placa, info.modelo, info.marca, info.ano, info.capacidade_passageiros);
+            await modelVeiculo.criarVeiculo(info.placa, info.modelo, info.marca, info.ano, info.capacidade_passageiros, info.quilometragem, "Disponivel");
             console.log(`Veiculo da placa ${info.placa} adicionado com sucesso!`);
         }
 
