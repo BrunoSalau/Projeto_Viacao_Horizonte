@@ -1,0 +1,76 @@
+
+:root {
+    --sidebar-width-full: 220px;
+    --sidebar-width-icons: 64px;
+    --sidebar-bg: rgb(13, 14, 19);
+    --nav-bg: rgb(21, 22, 29);
+}
+
+.sidebar {
+    width: var(--sidebar-width-full);
+    min-width: var(--sidebar-width-full);
+    background: var(--sidebar-bg);
+}
+
+.bg-dark2 { background: var(--sidebar-bg); }
+.bg-dark3 { background: var(--nav-bg); }
+
+.text-yellow { color: yellow; }
+.text-white2 { color: #bbb; }
+
+.fs-7 { font-size: 11px; }
+
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 18px;
+    background: white;
+    border-bottom: 1px solid #ddd;
+}
+
+.topbar-title {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+
+.vehicles-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    padding: 20px;
+}
+
+/* CARD */
+.card-manutencao {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    border: 1px solid #eee;
+}
+
+
+.btn-add-vehicle {
+    background: #f5c518;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background: white;
+    width: 400px;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 8px;
+}
