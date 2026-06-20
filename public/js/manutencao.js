@@ -64,3 +64,20 @@ document.getElementById('formCriar').addEventListener('submit', async (e) => {
 
     listarManutencoes();
 });
+async function deletarManutencao(id) {
+    if (!confirm('Tem certeza que deseja deletar essa manutenção?')) return;
+ 
+    const res = await fetch('/deletarManutencao', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+    });
+ 
+    const msg = await res.json();
+ 
+    modalMsg.style.display = 'block';
+    document.getElementById('msgTitulo').innerText = msg.status;
+    document.getElementById('msgTexto').innerText = msg.menssagem;
+ 
+    listarManutencoes();
+}

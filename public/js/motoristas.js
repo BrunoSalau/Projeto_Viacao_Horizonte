@@ -64,3 +64,20 @@ document.getElementById('formCriar').addEventListener('submit', async (e) => {
 
     listarMotoristas();
 });
+async function deletarMotorista(cpf) {
+    if (!confirm(`Tem certeza que deseja deletar o motorista de CPF ${cpf}?`)) return;
+ 
+    const res = await fetch('/deletarMotorista', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cpf })
+    });
+ 
+    const msg = await res.json();
+ 
+    modalMsg.style.display = 'block';
+    document.getElementById('msgTitulo').innerText = msg.status;
+    document.getElementById('msgTexto').innerText = msg.menssagem;
+ 
+    listarMotoristas();
+}

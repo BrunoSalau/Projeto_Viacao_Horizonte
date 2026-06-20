@@ -64,3 +64,20 @@ document.getElementById('formCriar').addEventListener('submit', async (e) => {
 
     listarVeiculos();
 });
+async function deletarVeiculo(placa) {
+    if (!confirm(`Tem certeza que deseja deletar o veículo ${placa}?`)) return;
+ 
+    const res = await fetch('/deletarVeiculo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ placa })
+    });
+ 
+    const msg = await res.json();
+ 
+    modalMsg.style.display = 'block';
+    document.getElementById('msgTitulo').innerText = msg.status;
+    document.getElementById('msgTexto').innerText = msg.menssagem;
+ 
+    listarVeiculos();
+}
