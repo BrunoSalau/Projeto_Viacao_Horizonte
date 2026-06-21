@@ -32,7 +32,7 @@ export class modelVeiculo{
         return result.rows[0];
     }
 
-    static async atualizarVeiculo(placa, modelo, marca, ano, capacidade_passageiros, quilometragem, status, imagem){
+    static async atualizarVeiculo(placa, modelo, marca, ano, capacidade_passageiros, quilometragem, status){
 
     const result = await pool.query(
         `UPDATE veiculo
@@ -41,11 +41,10 @@ export class modelVeiculo{
             ano = $3,
             capacidade_passageiros = $4,
             quilometragem = $5,
-            status = $6,
-            imagem = $7
-        WHERE placa = $8
+            status = $6
+        WHERE placa = $7
         RETURNING *`,
-        [modelo, marca, ano, capacidade_passageiros, quilometragem, status, imagem, placa]
+        [modelo, marca, ano, capacidade_passageiros, quilometragem, status, placa]
     );
 
     return result.rows[0];

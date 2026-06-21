@@ -3,6 +3,10 @@ import { modelUsuario } from '../model/usuarioModel.js';
 
 export class controllerMotorista {
 
+    static mostrarTela(req,res){
+        res.render('motoristas');
+    }
+
     // LISTAR MOTORISTAS
     static async listarMotoristas(req, res) {
         try {
@@ -98,7 +102,7 @@ export class controllerMotorista {
                 });
             }
 
-            const motoristaAtualizado = await modelMotorista.atualizarMotorista(cpf, nome, cnh, telefone);
+            const motoristaAtualizado = await modelMotorista.atualizarMotorista(nome, cnh, telefone, cpf);
 
             return res.status(200).json({
                 sucesso: true,

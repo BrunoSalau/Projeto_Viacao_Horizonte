@@ -3,6 +3,10 @@ import express from 'express';
 
 const router = express.Router();
 
+router.get('/',controllerMotorista.mostrarTela);
+
+router.post('/',controllerMotorista.mostrarTela);
+
 router.get('/listarMotoristas', controllerMotorista.listarMotoristas);
 router.post('/buscarMotorista', controllerMotorista.buscarMotorista);
 router.put('/atualizarMotorista', controllerMotorista.atualizarMotorista);

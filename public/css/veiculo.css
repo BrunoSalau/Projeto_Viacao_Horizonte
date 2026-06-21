@@ -316,7 +316,6 @@ body {
         .vehicles-toolbar {
             display: flex;
             align-items: center;
-            justify-content: space-between;
             padding: 20px 28px 0;
             gap: 10px;
             flex-wrap: wrap;

@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS motorista(
     nome VARCHAR(250) NOT NULL,
     cpf VARCHAR(11) UNIQUE NOT NULL,
     cnh VARCHAR(250) NOT NULL,
-    telefone VARCHAR(10) NOT NULL,
+    telefone VARCHAR(11) NOT NULL,
     usuario_id INTEGER NOT NULL,
     FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 );
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS supervisor(
     id SERIAL PRIMARY KEY,
     nome VARCHAR(250) NOT NULL,
     cpf VARCHAR(11) UNIQUE NOT NULL,
-    telefone VARCHAR(10) NOT NULL,
+    telefone VARCHAR(11) NOT NULL,
     usuario_id INTEGER NOT NULL,
     FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 );

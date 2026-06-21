@@ -32,18 +32,17 @@ export class modelMotorista{
             return result.rows[0];
         }
 
-        static async atualizarMotorista(nome, cpf, cnh, telefone, usuario_id) {
+        static async atualizarMotorista(nome, cnh, telefone, cpf) {
             const result = await pool.query(
                 `
                 UPDATE motorista
                 SET nome = $1,
                     cnh = $2,
-                    telefone = $3,
-                    usuario_id = $4
-                WHERE cpf = $5
+                    telefone = $3
+                WHERE cpf = $4
                 RETURNING *
                 `,
-                [nome, cnh, telefone, usuario_id, cpf]
+                [nome, cnh, telefone, cpf]
             );
             return result.rows[0];
         }

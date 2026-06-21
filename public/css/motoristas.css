@@ -1,0 +1,515 @@
+/* =============================================
+   VARIÁVEIS E BASE
+   ============================================= */
+:root {
+    --sidebar-width-full: 220px;
+    --sidebar-width-icons: 64px;
+    --sidebar-bg: rgb(13, 14, 19);
+    --nav-bg: rgb(21, 22, 29);
+    --transition-speed: 0.3s;
+}
+
+/* =============================================
+   CORES E UTILITÁRIOS
+   ============================================= */
+.bg-dark2 {
+    background: var(--sidebar-bg);
+}
+.bg-dark3 {
+    background: var(--nav-bg);
+}
+.text-yellow {
+    color: yellow;
+}
+.text-white2 {
+    color: rgb(185, 185, 185);
+}
+.fs-7 {
+    font-size: 10px;
+}
+
+/* =============================================
+   LAYOUT PRINCIPAL
+   ============================================= */
+body {
+    overflow-x: hidden;
+}
+
+.main-content {
+    min-height: 100vh;
+    overflow: hidden;
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+/* =============================================
+   SIDEBAR — ESTADO PADRÃO (desktop largo)
+   ============================================= */
+.sidebar {
+    width: var(--sidebar-width-full);
+    min-width: var(--sidebar-width-full);
+    max-width: var(--sidebar-width-full);
+    flex-shrink: 0;
+    transition: width var(--transition-speed) ease,
+                min-width var(--transition-speed) ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar-header {
+    overflow: hidden;
+}
+
+#img-vh {
+    width: 50%;
+    max-width: 80px;
+    display: block;
+}
+
+.sidebar-brand-text {
+    transition: opacity var(--transition-speed) ease;
+    white-space: nowrap;
+}
+
+.sidebar-nav-section {
+    margin: 0 8px;
+    transition: margin var(--transition-speed) ease;
+}
+
+.nav-item-link {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.nav-item {
+    border-radius: 20px;
+    width: 96%;
+}
+.nav-item:hover .nav-label {
+    color: yellow;
+}
+.nav-item:hover {
+    background: linear-gradient(150deg, rgba(58, 57, 49, 0.306), rgba(83, 90, 2, 0.205));
+    transition: 0.5s;
+    transform: translateX(10px);
+    box-shadow: -1px 0px 2px 0px rgb(242, 255, 0);
+    color: rgb(221, 254, 1);
+}
+.nav-item:not(:hover) {
+    transition: 0.5s;
+}
+
+.nav-icon {
+    width: 25px;
+    min-width: 25px;
+    height: 25px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.nav-label {
+    overflow: hidden;
+    transition: opacity var(--transition-speed) ease,
+                max-width var(--transition-speed) ease;
+    max-width: 160px;
+    opacity: 1;
+}
+
+.hamburger-btn,
+.close-btn {
+    display: none;
+}
+
+/* =============================================
+   SIDEBAR — MODO SOMENTE ÍCONES (≤ 900px)
+   ============================================= */
+@media (max-width: 900px) and (min-width: 577px) {
+
+    .sidebar {
+        width: var(--sidebar-width-icons);
+        min-width: var(--sidebar-width-icons);
+        max-width: var(--sidebar-width-icons);
+    }
+
+    .sidebar-brand-text {
+        opacity: 0;
+        pointer-events: none;
+        max-height: 0;
+        overflow: hidden;
+    }
+
+    .sidebar-header {
+        display: flex;
+        justify-content: center;
+        padding: 16px 8px !important;
+        margin: 0 !important;
+    }
+
+    #img-vh {
+        width: 36px;
+        max-width: 36px;
+    }
+
+    .nav-label {
+        opacity: 0;
+        max-width: 0;
+        overflow: hidden;
+    }
+
+    .nav-item-link {
+        justify-content: center;
+        margin: 8px auto !important;
+        padding: 6px !important;
+    }
+
+    .sidebar-nav-section {
+        margin: 0 4px;
+    }
+
+    .nav-item-link[title] {
+        position: relative;
+    }
+}
+
+/* =============================================
+   TOPBAR
+   ============================================= */
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 28px;
+    background: #fff;
+    border-bottom: 1px solid #ebebeb;
+    gap: 16px;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.topbar-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #111;
+    margin: 0;
+}
+
+.topbar-search {
+    display: flex;
+    align-items: center;
+    background: #f4f4f4;
+    border-radius: 8px;
+    padding: 7px 14px;
+    gap: 8px;
+    min-width: 240px;
+    max-width: 340px;
+    flex: 1;
+}
+
+.topbar-search input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 0.875rem;
+    color: #555;
+    width: 100%;
+}
+
+.topbar-search input::placeholder { color: #aaa; }
+
+.topbar-search .kbd-hint {
+    font-size: 11px;
+    color: #aaa;
+    background: #e8e8e8;
+    border-radius: 4px;
+    padding: 1px 5px;
+    white-space: nowrap;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.notif-btn {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.notif-btn svg { color: #555; }
+
+.notif-dot {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 9px;
+    height: 9px;
+    background: #f5c518;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #ddd;
+}
+
+.user-avatar-placeholder {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #c9d0d9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #555;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #111;
+    line-height: 1.2;
+}
+
+.user-role {
+    font-size: 0.75rem;
+    color: #888;
+}
+
+/* =============================================
+   TOOLBAR (filtros + botões de ação)
+   ============================================= */
+.vehicles-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px 28px 0;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-select {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 7px 32px 7px 12px;
+    font-size: 0.85rem;
+    color: #333;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 10px center;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.filter-select:focus { border-color: #aaa; }
+
+.btn-add-vehicle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f5c518;
+    color: #111;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 18px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+}
+
+.btn-add-vehicle:hover { background: #e0b400; }
+
+/* =============================================
+   DRIVER GRID — mesmo padrão do vehicle grid
+   ============================================= */
+.vehicles-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    padding: 20px 28px 28px;
+}
+
+@media (max-width: 1200px) {
+    .vehicles-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 900px) {
+    .vehicles-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 576px) {
+    .vehicles-grid { grid-template-columns: 1fr; }
+}
+
+/* =============================================
+   DRIVER CARD
+   ============================================= */
+.vehicle-card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #ebebeb;
+    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.vehicle-card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+/* Avatar do motorista */
+.driver-avatar {
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(135deg, #1e1e2a 0%, #2e2e3e 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.driver-avatar-initials {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #f5c518;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: 1px;
+    user-select: none;
+}
+
+.vehicle-body {
+    padding: 14px 16px 12px;
+}
+
+.vehicle-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.vehicle-model {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111;
+}
+
+.badge-status {
+    font-size: 0.7rem;
+    font-weight: 600;
+    border-radius: 20px;
+    padding: 3px 10px;
+    white-space: nowrap;
+}
+
+.badge-ativo    { background: #e8f7ee; color: #1a9150; }
+.badge-inativo  { background: #ffe0e0; color: #c93030; }
+
+.vehicle-meta {
+    font-size: 0.78rem;
+    color: #666;
+    margin-bottom: 2px;
+}
+
+.vehicle-meta span { font-weight: 600; color: #333; }
+
+.vehicle-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.vehicle-stat {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.78rem;
+    color: #555;
+}
+
+.vehicle-stat svg { color: #888; flex-shrink: 0; }
+
+.btn-more {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #aaa;
+    padding: 2px 4px;
+    border-radius: 4px;
+    line-height: 1;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+.btn-more:hover { color: #555; background: #f4f4f4; }
+
+/* =============================================
+   MODAIS
+   ============================================= */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background: white;
+    width: 420px;
+    max-width: 95%;
+    margin: 8% auto;
+    padding: 28px 24px 24px;
+    border-radius: 12px;
+    position: relative;
+}
+
+.modal-content span[id^="fechar"] {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: #888;
+    line-height: 1;
+}
+
+.modal-content span[id^="fechar"]:hover {
+    color: #333;
+}

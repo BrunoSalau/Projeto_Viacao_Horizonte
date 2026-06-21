@@ -16,4 +16,5 @@ router.post('/listar', controllerVeiculo.listarVeiculos);
 
 router.post('/deletar', controllerVeiculo.deletarVeiculo);
 
+router.put('/atualizar', controllerVeiculo.atualizarVeiculo);
 export default router;
