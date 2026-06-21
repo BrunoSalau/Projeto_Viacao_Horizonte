@@ -53,11 +53,15 @@ CREATE TABLE IF NOT EXISTS rota(
 );
 CREATE TABLE IF NOT EXISTS viagem(
     id SERIAL PRIMARY KEY,
-    id_veiculo INTEGER REFERENCES veiculo(id),
-    id_rota INTEGER REFERENCES rota(id),
+    id_veiculo INTEGER NOT NULL REFERENCES veiculo(id),
+    id_rota INTEGER NOT NULL REFERENCES rota(id),
+    id_motorista INTEGER NOT NULL REFERENCES motorista(id),
     data_viagem DATE NOT NULL,
-    status VARCHAR(30) DEFAULT 'Agendada'
+    horario_viagem TIME NOT NULL,
+    status VARCHAR(30) DEFAULT 'Agendada',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
 CREATE TABLE IF NOT EXISTS manutencao(
     id SERIAL PRIMARY KEY,
     id_veiculo INTEGER REFERENCES veiculo(id),

@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Motoristas</title>
+    <title>Viagens</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/motoristas.css">
+    <link rel="stylesheet" href="/css/viagens.css">
 </head>
 
 <body>
@@ -102,7 +102,7 @@
                 <!-- TOPBAR -->
                 <div class="topbar">
                     <div class="topbar-left">
-                        <h2 class="topbar-title">Motoristas</h2>
+                        <h2 class="topbar-title">Viagens</h2>
                     </div>
 
                     <form action="get">
@@ -112,7 +112,7 @@
                                 <circle cx="11" cy="11" r="8" />
                                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
                             </svg>
-                            <input type="text" id="campoPesquisa" placeholder="Pesquisar motorista...">
+                            <input type="text" id="campoPesquisa" placeholder="Pesquisar viagem...">
                             <button type="button" class="kbd-hint btn btn-light" id="btnPesquisar">Pesquisar</button>
                         </div>
                     </form>
@@ -125,7 +125,6 @@
                                 <div class="user-role">Supervisor</div>
                             </div>
                         </div>
-                        <button id="btnLogout" class="btn btn-outline-dark btn-sm">Sair</button>
                     </div>
                 </div>
 
@@ -137,48 +136,48 @@
                             <line x1="12" y1="5" x2="12" y2="19" />
                             <line x1="5" y1="12" x2="19" y2="12" />
                         </svg>
-                        Adicionar Motorista
+                        Agendar Viagem
                     </button>
                     <button id="abrirModalEx" class="btn-dark btn">
-                        Apagar Motorista
+                        Cancelar Viagem
                     </button>
                     <button id="abrirModalEdit" class="btn-outline-dark btn">
-                        Editar Motorista
+                        Alterar Status
                     </button>
                 </div>
 
-                <!-- GRID DE MOTORISTAS -->
-                <div class="vehicles-grid" id="gridMotoristas">
+                <!-- GRID DE VIAGENS -->
+                <div class="vehicles-grid" id="gridViagens">
                     <!-- Cards inseridos via JS -->
                 </div>
 
 
-                <!-- ===================== MODAL: ADICIONAR =====================
-                     Rota: POST /usuario/criarUsuario
-                     O controller cria o usuário (tipo Motorista) e o motorista
-                     em uma única operação. Por isso o form inclui o campo senha.
+                <!-- ===================== MODAL: AGENDAR VIAGEM =====================
+                     Rota: POST /viagem/adicionar
+                     Requer: id_rota, id_veiculo, id_motorista, data_viagem, horario_viagem, id_supervisor
                 ================================================================ -->
                 <div id="modal" class="modal">
                     <div class="modal-content">
                         <span id="fecharModal">&times;</span>
-                        <h2 class="text-center">Adicionar Motorista</h2>
+                        <h2 class="text-center">Agendar Viagem</h2>
                         <form class="text-center" id="formAdicionar">
-                            <p>Preencha os dados para criar o acesso e o cadastro do motorista.</p>
+                            <p>Preencha os dados para agendar uma nova viagem.</p>
 
-                            <input type="text" name="nome" class="form-control my-3"
-                                placeholder="Nome completo..." required>
+                            <select name="id_rota" class="form-control my-3" required id="selectRota">
+                                <option value="" disabled selected>Selecione a rota...</option>
+                            </select>
 
-                            <input type="text" name="cpf" class="form-control my-3"
-                                placeholder="CPF (somente números)..." required>
+                            <select name="id_veiculo" class="form-control my-3" required id="selectVeiculo">
+                                <option value="" disabled selected>Selecione o veículo...</option>
+                            </select>
 
-                            <input type="password" name="senha" class="form-control my-3"
-                                placeholder="Senha de acesso..." required>
+                            <select name="id_motorista" class="form-control my-3" required id="selectMotorista">
+                                <option value="" disabled selected>Selecione o motorista...</option>
+                            </select>
 
-                            <input type="text" name="cnh" class="form-control my-3"
-                                placeholder="CNH..." required>
+                            <input type="date" name="data_viagem" class="form-control my-3" required>
 
-                            <input type="text" name="telefone" class="form-control my-3"
-                                placeholder="Telefone..." required>
+                            <input type="time" name="horario_viagem" class="form-control my-3" required>
 
                             <button type="submit" class="btn btn-warning mt-2">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -186,62 +185,88 @@
                                     <line x1="12" y1="5" x2="12" y2="19" />
                                     <line x1="5" y1="12" x2="19" y2="12" />
                                 </svg>
-                                Adicionar Motorista
+                                Agendar Viagem
                             </button>
                         </form>
                     </div>
                 </div>
 
 
-                <!-- ===================== MODAL: EXCLUIR =====================
-                     Rota: POST /usuario/deletarUsuario
-                     O controller busca o CPF, identifica que é Motorista e
-                     remove os registros de usuário e motorista juntos.
+                <!-- ===================== MODAL: CANCELAR VIAGEM =====================
+                     Permite localizar uma viagem e cancelá-la.
+                     Rota: POST /viagem/deletar
                 ============================================================= -->
                 <div id="modalEx" class="modal">
                     <div class="modal-content">
                         <span id="fecharModalEx">&times;</span>
-                        <h2 class="text-center mb-3">Apagar Motorista</h2>
+                        <h2 class="text-center mb-3">Cancelar Viagem</h2>
                         <form class="text-center" id="formExcluir">
-                            <p>Informe o CPF do motorista. O acesso ao sistema e o cadastro serão removidos.</p>
-                            <input type="text" placeholder="CPF do motorista..." name="cpf"
-                                class="form-control" required>
+                            <p>Informe o ID da viagem para localizá-la.</p>
+                            <input type="number" placeholder="ID da viagem..." name="id"
+                                class="form-control" required id="inputIdCancelar">
                             <br>
-                            <button type="submit" class="btn btn-warning" id="excluirBtn">
-                                Excluir Motorista
+                            <div id="resumoCancelar" style="display: none; text-align: left; margin: 15px 0; padding: 12px; background: #f5f5f5; border-radius: 8px;">
+                                <p><strong>Origem:</strong> <span id="cancelarOrigem"></span></p>
+                                <p><strong>Destino:</strong> <span id="cancelarDestino"></span></p>
+                                <p><strong>Motorista:</strong> <span id="cancelarMotorista"></span></p>
+                                <p><strong>Veículo:</strong> <span id="cancelarVeiculo"></span></p>
+                                <p><strong>Data:</strong> <span id="cancelarData"></span></p>
+                                <p><strong>Horário:</strong> <span id="cancelarHorario"></span></p>
+                                <p><strong>Status:</strong> <span id="cancelarStatus"></span></p>
+                            </div>
+                            <button type="button" class="btn btn-outline-dark" id="btnBuscarCancelar" style="margin-bottom: 10px;">
+                                Localizar Viagem
+                            </button>
+                            <button type="submit" class="btn btn-warning" id="btnConfirmarCancelar" style="display: none;">
+                                Cancelar Viagem
                             </button>
                         </form>
                     </div>
                 </div>
 
 
-                <!-- ===================== MODAL: EDITAR =====================
-                     Rota: PUT /motoristas/atualizarMotorista
-                     Atualiza apenas os dados do motorista (nome, cnh, telefone).
-                     Não altera CPF nem senha do usuário.
+                <!-- ===================== MODAL: ALTERAR STATUS =====================
+                     Permite localizar uma viagem e alterar seu status.
+                     Lógica:
+                     - Motorista: pode iniciar (Agendada → Em andamento) ou finalizar (Em andamento → Finalizada)
+                     - Supervisor: pode cancelar (Agendada → Cancelada)
+                     Rota: PUT /viagem/alterar-status
                 ============================================================= -->
                 <div id="modalEdit" class="modal">
                     <div class="modal-content">
                         <span id="fecharModalEdit">&times;</span>
-                        <h2 class="text-center mb-3">Editar Motorista</h2>
+                        <h2 class="text-center mb-3">Alterar Status da Viagem</h2>
                         <form class="text-center" id="formEditar">
-                            <p>Informe o CPF para localizar o motorista e preencha os campos a alterar.</p>
+                            <p>Informe o ID da viagem para localizá-la.</p>
 
-                            <input type="text" name="cpf" class="form-control my-3"
-                                placeholder="CPF (para localizar)..." required>
+                            <input type="number" name="id" class="form-control my-3"
+                                placeholder="ID da viagem..." required id="inputIdStatus">
 
-                            <input type="text" name="nome" class="form-control my-3"
-                                placeholder="Novo nome...">
-
-                            <input type="text" name="cnh" class="form-control my-3"
-                                placeholder="Nova CNH...">
-
-                            <input type="text" name="telefone" class="form-control my-3"
-                                placeholder="Novo telefone...">
-
-                            <button type="submit" class="btn btn-warning mt-2">
-                                Salvar Alterações
+                            <button type="button" class="btn btn-outline-dark" id="btnBuscarStatus" style="margin-bottom: 10px;">
+                                Localizar Viagem
                             </button>
+
+                            <div id="resumoStatus" style="display: none; text-align: left; margin: 15px 0; padding: 12px; background: #f5f5f5; border-radius: 8px;">
+                                <p><strong>Origem:</strong> <span id="statusOrigem"></span></p>
+                                <p><strong>Destino:</strong> <span id="statusDestino"></span></p>
+                                <p><strong>Motorista:</strong> <span id="statusMotorista"></span></p>
+                                <p><strong>Veículo:</strong> <span id="statusVeiculo"></span></p>
+                                <p><strong>Data:</strong> <span id="statusData"></span></p>
+                                <p><strong>Horário:</strong> <span id="statusHorario"></span></p>
+                                <p><strong>Status Atual:</strong> <span id="statusAtual"></span></p>
+                            </div>
+
+                            <div id="acoesBotoes" style="display: none; margin-top: 15px;">
+                                <button type="button" class="btn btn-success" id="btnIniciar" style="display: none; width: 100%; margin-bottom: 8px;">
+                                    Iniciar Viagem
+                                </button>
+                                <button type="button" class="btn btn-success" id="btnFinalizar" style="display: none; width: 100%; margin-bottom: 8px;">
+                                    Finalizar Viagem
+                                </button>
+                                <button type="button" class="btn btn-danger" id="btnCancelarStatus" style="display: none; width: 100%;">
+                                    Cancelar Viagem
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -263,7 +288,7 @@
         </div>
     </main>
 
-    <script src="js/motoristas.js"></script>
+    <script src="js/viagens.js"></script>
 </body>
 
 </html>

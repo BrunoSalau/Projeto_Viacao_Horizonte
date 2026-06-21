@@ -14,6 +14,15 @@ export class modelMotorista{
             return result.rows[0];
         }
 
+        static async buscarMotoristaPorId(id) {
+        const result = await pool.query(
+            `SELECT * FROM motorista WHERE id = $1`,
+            [id]
+        );
+    
+        return result.rows[0];
+        }
+
         static async listarMotoristas() {
             const result = await pool.query(
                 'SELECT * FROM motorista'

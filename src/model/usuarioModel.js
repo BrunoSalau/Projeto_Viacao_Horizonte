@@ -32,6 +32,14 @@ export class modelUsuario{
         return result.rows[0];
     }
 
+    static async buscarUsuarioPorId(id) {
+    const result = await pool.query(
+        `SELECT * FROM usuario WHERE id = $1`,
+        [id]
+    );
+    return result.rows[0];
+    }
+
     static async atualizarUsuario(cpf, senha, tipo_usuario) {
     const result = await pool.query(
         `

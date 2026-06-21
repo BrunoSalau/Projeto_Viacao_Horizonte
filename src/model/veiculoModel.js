@@ -32,6 +32,14 @@ export class modelVeiculo{
         return result.rows[0];
     }
 
+    static async buscarVeiculoPorId(id) {
+        const result = await pool.query(
+            `SELECT * FROM veiculo WHERE id = $1`,
+            [id]
+        );
+        return result.rows[0];
+    }
+
     static async atualizarVeiculo(placa, modelo, marca, ano, capacidade_passageiros, quilometragem, status){
 
     const result = await pool.query(

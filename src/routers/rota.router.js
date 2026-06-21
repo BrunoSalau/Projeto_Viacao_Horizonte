@@ -1,16 +1,20 @@
 import { controllerRota } from "../controllers/rota.controller.js";
-import express from "express"
+import express from 'express';
 
 const router = express.Router();
 
-router.post('/criar',controllerRota.criarRota);
+router.get('/', controllerRota.telaRota);
 
-router.get('/listar',controllerRota.listarRotas);
+router.post('/', controllerRota.listarRotas);
 
-router.put('/atualizar',controllerRota.atualizarRota);
+router.post('/adicionar', controllerRota.criarRota);
 
-router.post('/buscar',controllerRota.buscarRota);
+router.post('/procurar', controllerRota.procurarRota);
 
-router.post('/deletar',controllerRota.deletarRota);
+router.post('/listar', controllerRota.listarRotas);
+
+router.post('/deletar', controllerRota.deletarRota);
+
+router.put('/atualizar', controllerRota.atualizarRota);
 
 export default router;
