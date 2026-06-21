@@ -106,6 +106,13 @@ document.getElementById('fecharErroPlacaBtn').addEventListener('click', () => {
     erroPlaca.style.display = 'none';
 });
 
+document.getElementById('btnLogout').addEventListener('click', async () => {
+    await fetch('/usuario/logout', { method: 'POST' });
+    localStorage.removeItem('token');
+    localStorage.removeItem('tipo');
+    window.location.href = '/';
+});
+
 // Fechar ao clicar fora do conteúdo
 window.addEventListener('click', (e) => {
     if (e.target === modal)     modal.style.display     = 'none';
@@ -113,6 +120,30 @@ window.addEventListener('click', (e) => {
     if (e.target === modalEdit) modalEdit.style.display = 'none';
     if (e.target === erroPlaca) erroPlaca.style.display = 'none';
 });
+
+/* =============================================
+   MOSTRAR INFORMAÇÕES DO USUARIO
+   ============================================= */
+
+    async function obterDadosUsuario() {
+       const resposta = await fetch('/usuario/perfil');
+       const retorno = await resposta.json();
+       
+       console.log(retorno);
+       document.querySelector('.user-name').innerHTML = retorno.dados.nome;
+       document.querySelector('.user-role').innerHTML = retorno.dados.tipo;
+       if(retorno.dados.tipo == "Supervisor"){
+           document.querySelector('.user-avatar-placeholder').innerHTML = `
+           <img class="img-fluid nav-icon" src="img/icons/supervisorIMG.png" alt="SP">
+           `;
+       }else{
+        document.querySelector('.user-avatar-placeholder').innerHTML = `
+        <img class="img-fluid nav-icon" src="img/icons/motoristaIMG.png" alt="MT">
+        `;
+       }
+   }
+   obterDadosUsuario();
+
 
 /* =============================================
    FEEDBACK POPUP

@@ -5,6 +5,10 @@ import jwt from 'jsonwebtoken';
 
 export class controllerUsuario {
 
+    static mostrarInfo(req,res){
+        res.json({ dados: req.usuario });
+    }
+
     // CRIAR USUARIO
     static async criarUsuario(req, res) {
         try {
@@ -95,12 +99,24 @@ export class controllerUsuario {
                 });
             }
 
+            let userName;
+            if(usuario.tipo_usuario == "Supervisor"){
+                userName = await modelSupervisor.buscarSupervisorCPF(usuario.cpf);
+            }
+            if(usuario.tipo_usuario == "Motorista"){
+                userName = await modelSupervisor.buscarMotoristaCPF(usuario.cpf);
+            }
+            if(usuario.tipo_usuario == "Admin"){
+                userName = { nome: "Admin Master" };  // ← Novo tipo tratado
+            }
+
+
             const token = jwt.sign(
-                { id: usuario.id, cpf: usuario.cpf, tipo: usuario.tipo_usuario },
+                { id: usuario.id, cpf: usuario.cpf, tipo: usuario.tipo_usuario, nome: userName.nome },
                 process.env.JWT_SECRET,
                 { expiresIn: '8h' }
             );
-
+            
             // salva o token também em cookie httpOnly, pra rotas de página (GET) funcionarem sem precisar mandar header
             res.cookie('token', token, {
                 httpOnly: true,
@@ -160,7 +176,7 @@ export class controllerUsuario {
                 });
             }
 
-            if (user.tipo_usuario === 'Supervisor') {
+            if (user.tipo_usuario === 'Supervisor' || user.tipo_usuario === 'Admin') {
                 const deleteSupervisor = await modelSupervisor.deletarSupervisor(cpf);
                 const deleteUsuario = await modelUsuario.deletarUsuario(cpf);
 
@@ -180,6 +196,60 @@ export class controllerUsuario {
             return res.status(500).json({
                 sucesso: false,
                 mensagem: 'Erro interno ao deletar usuário.',
+                erro: error.message
+            });
+        }
+    }
+
+/*================================*/
+
+    static mostrarTelaCriarSupervisor(req, res) {
+        if (req.usuario?.tipo !== 'Admin') {
+            return res.status(403).redirect('/');
+        }
+        res.render('criar-supervisor');
+    }
+
+    static async criarSupervisorAdmin(req, res) {
+        try {
+            const { senha, nome, telefone } = req.body;
+
+            const cpf = req.body.cpf.replace(/\D/g, '');
+
+            const supervisores = await modelSupervisor.listarSupervisores();
+
+            if (!cpf || !senha || !nome || !telefone) {
+                return res.status(400).json({
+                    sucesso: false,
+                    mensagem: 'CPF, Senha, Nome e Telefone são obrigatórios.'
+                });
+            }
+
+            const usuarioExiste = await modelUsuario.buscarUsuarioCPF(cpf);
+            if (usuarioExiste) {
+                return res.status(409).json({
+                    sucesso: false,
+                    mensagem: 'CPF já cadastrado.'
+                });
+            }
+
+            const usuario = await modelUsuario.criarUsuario(cpf, senha, 'Supervisor');
+            const supervisor = await modelSupervisor.criarSupervisor(nome, cpf, telefone, usuario.id);
+
+            return res.status(201).json({
+                sucesso: true,
+                mensagem: 'Supervisor criado com sucesso!',
+                dados: {
+                    usuario: { id: usuario.id, cpf: usuario.cpf, tipo: usuario.tipo_usuario },
+                    supervisor: { nome: supervisor.nome, cpf: supervisor.cpf, telefone: supervisor.telefone }
+                }
+            });
+
+        } catch (error) {
+            console.error('Erro ao criar supervisor:', error);
+            return res.status(500).json({
+                sucesso: false,
+                mensagem: 'Erro interno.',
                 erro: error.message
             });
         }

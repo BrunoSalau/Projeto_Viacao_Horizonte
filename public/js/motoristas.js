@@ -62,6 +62,28 @@ window.addEventListener('click', (e) => {
     if (e.target === modalEdit) modalEdit.style.display = 'none';
     if (e.target === erroPlaca) erroPlaca.style.display = 'none';
 });
+/* =============================================
+   MOSTRAR INFORMAÇÕES DO USUARIO
+   ============================================= */
+
+    async function obterDadosUsuario() {
+       const resposta = await fetch('/usuario/perfil');
+       const retorno = await resposta.json();
+       
+       console.log(retorno);
+       document.querySelector('.user-name').innerHTML = retorno.dados.nome;
+       document.querySelector('.user-role').innerHTML = retorno.dados.tipo;
+       if(retorno.dados.tipo == "Supervisor"){
+           document.querySelector('.user-avatar-placeholder').innerHTML = `
+           <img class="img-fluid nav-icon" src="img/icons/supervisorIMG.png" alt="SP">
+           `;
+       }else{
+        document.querySelector('.user-avatar-placeholder').innerHTML = `
+        <img class="img-fluid nav-icon" src="img/icons/motoristaIMG.png" alt="MT">
+        `;
+       }
+   }
+   obterDadosUsuario();
 
 /* =============================================
    FEEDBACK POPUP

@@ -3,10 +3,10 @@ import cookieParser from 'cookie-parser';
 import routes from './routers/web.js'
 import usuarioRouter   from './routers/usuario.router.js';
 import motoristaRouter from './routers/motorista.router.js';
+import { initAdmin } from './utils/initAdmin.js';
 import supervisorRouter from './routers/supervisor.router.js';
 import rotaRouter from './routers/rota.router.js';
 import viagemRouter from './routers/viagem.router.js';
-
 import veiculoRouter from './routers/veiculo.router.js';
 import painelRouter from './routers/painel.router.js';
 
@@ -41,5 +41,5 @@ app.use('/painel', painelRouter);
 
 app.use('/viagem', viagemRouter);
 
+await initAdmin();
 export default app;
-

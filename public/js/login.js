@@ -141,11 +141,34 @@ form.addEventListener('submit', async (event)=>{
         }
         localStorage.setItem('token', dados.token);
         localStorage.setItem('tipo', dados.tipo);
-    
+    /*
         if (dados.tipo === 'Supervisor') {
             window.location.href = '/veiculo';
         } else {
             window.location.href = '/motorista'; // tela mais simples do motorista
+        }
+    }
+    */
+   // Se for motorista, busca o nome antes de redirecionar
+        if (dados.tipo === 'Motorista') {
+            try {
+                const resNome = await fetch('/motorista/minhasViagens', {
+                    headers: { 'Authorization': 'Bearer ' + dados.token }
+                });
+                const dadosMotorista = await resNome.json();
+                if (dadosMotorista.nome) {
+                    localStorage.setItem('nomeMotorista', dadosMotorista.nome);
+                }
+            } catch(e) {
+                // não bloqueia o login se falhar
+            }
+            window.location.href = '/motorista/painel';
+        } 
+        if(dados.tipo === 'Supervisor') {
+            window.location.href = '/veiculo';
+        }
+        if(dados.tipo === 'Admin'){
+            window.location.href = '/usuario/criar-supervisor';
         }
     }
 
