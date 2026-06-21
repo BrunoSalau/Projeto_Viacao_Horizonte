@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Viagens</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="/TelaMotoristaCss/painel_motorista.css">
+</head>
+
+<body>
+
+    <main class="container-fluid min-vh-100 px-0">
+        <div class="row flex-nowrap g-0">
+
+            <!-- Conteúdo principal -->
+            <section class="main-content bg-light flex-grow-1">
+
+                <!-- TOPBAR -->
+                <div class="topbar">
+                    <div class="topbar-left">
+                        <img src="/img/icons/vh.png" alt="VH" style="width:38px;">
+                        <h2 class="topbar-title">Minhas Viagens</h2>
+                    </div>
+
+                    <form action="get">
+                        <div class="topbar-search">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2"
+                                stroke-linecap="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                            </svg>
+                            <input type="text" id="campoPesquisa" placeholder="Pesquisar viagem...">
+                            <button type="button" class="kbd-hint btn btn-light" id="btnPesquisar">Pesquisar</button>
+                        </div>
+                    </form>
+
+                    <div class="topbar-right">
+                        <div class="user-info">
+                            <div class="user-avatar-placeholder" id="avatarInicial">M</div>
+                            <div class="sidebar-brand-text">
+                                <div class="user-name" id="nomeMotorista">Motorista</div>
+                                <div class="user-role">Motorista</div>
+                            </div>
+                        </div>
+                        <button class="btn-logout" id="btnLogout">Sair</button>
+                    </div>
+                </div>
+
+                <!-- TOOLBAR -->
+                <div class="vehicles-toolbar">
+                    <button id="abrirModalEdit" class="btn-add-vehicle">
+                        Alterar Status da Viagem
+                    </button>
+                </div>
+
+                <!-- GRID DE VIAGENS -->
+                <div class="vehicles-grid" id="gridViagens">
+                    <!-- Cards inseridos via JS -->
+                </div>
+
+                <!-- ===================== MODAL: ALTERAR STATUS ===================== -->
+                <div id="modalEdit" class="modal">
+                    <div class="modal-content">
+                        <span id="fecharModalEdit">&times;</span>
+                        <h2 class="text-center mb-3">Alterar Status da Viagem</h2>
+                        <form class="text-center" id="formEditar">
+                            <p>Informe o ID da viagem para localizá-la.</p>
+
+                            <input type="number" name="id" class="form-control my-3" placeholder="ID da viagem..."
+                                required id="inputIdStatus">
+
+                            <button type="button" class="btn btn-outline-dark" id="btnBuscarStatus"
+                                style="margin-bottom: 10px;">
+                                Localizar Viagem
+                            </button>
+
+                            <div id="resumoStatus"
+                                style="display: none; text-align: left; margin: 15px 0; padding: 12px; background: #f5f5f5; border-radius: 8px;">
+                                <p><strong>Origem:</strong> <span id="statusOrigem"></span></p>
+                                <p><strong>Destino:</strong> <span id="statusDestino"></span></p>
+                                <p><strong>Veículo:</strong> <span id="statusVeiculo"></span></p>
+                                <p><strong>Data:</strong> <span id="statusData"></span></p>
+                                <p><strong>Horário:</strong> <span id="statusHorario"></span></p>
+                                <p><strong>Status Atual:</strong> <span id="statusAtual"></span></p>
+                            </div>
+
+                            <div id="acoesBotoes" style="display: none; margin-top: 15px;">
+                                <button type="button" class="btn btn-success" id="btnIniciar"
+                                    style="display: none; width: 100%; margin-bottom: 8px;">
+                                    Iniciar Viagem
+                                </button>
+                                <button type="button" class="btn btn-primary" id="btnFinalizar"
+                                    style="display: none; width: 100%; margin-bottom: 8px;">
+                                    Finalizar Viagem
+                                </button>
+                                <p id="msgSemAcao" style="display:none; color:#888;">Esta viagem não pode ser alterada.
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- ===================== MODAL: FEEDBACK ===================== -->
+                <div id="erroPlaca" class="modal">
+                    <div id="bgPop" class="modal-content">
+                        <span id="fecharErroPlaca">&times;</span>
+                        <h2 class="text-center mb-3 text-white" id="msgTitulo"></h2>
+                        <p class="text-center text-white" id="msgErro"></p>
+                        <button class="btn btn-dark text-light" id="fecharErroPlacaBtn">
+                            Fechar
+                        </button>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    </main>
+
+    <script src="/TelaMotoristaJS/painel_motorista.js"></script>
+</body>
+
+</html>

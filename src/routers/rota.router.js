@@ -1,4 +1,5 @@
 import { controllerRota } from "../controllers/rota.controller.js";
+import { protegerPagina } from "../middleware/auth.js";
 import express from 'express';
 
 const router = express.Router();

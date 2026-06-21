@@ -9,6 +9,8 @@ import viagemRouter from './routers/viagem.router.js';
 
 import veiculoRouter from './routers/veiculo.router.js';
 import painelRouter from './routers/painel.router.js';
+import manutencaoRouter from './routers/manutencao.router.js';
+import abastecimentoRouter from './routers/abastecimento.router.js';
 
 const app = express();
 
@@ -40,6 +42,10 @@ app.use('/veiculo', veiculoRouter);
 app.use('/painel', painelRouter);
 
 app.use('/viagem', viagemRouter);
+
+app.use('/manutencao', manutencaoRouter);
+
+app.use('/abastecimento', abastecimentoRouter);
 
 export default app;
 

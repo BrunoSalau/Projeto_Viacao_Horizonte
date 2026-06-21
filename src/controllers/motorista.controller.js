@@ -1,10 +1,59 @@
 import { modelMotorista } from '../model/motoristaModel.js';
 import { modelUsuario } from '../model/usuarioModel.js';
+import { modelViagem } from '../model/viagemModel.js';
+import jwt from 'jsonwebtoken';
 
 export class controllerMotorista {
 
     static mostrarTela(req,res){
         res.render('motoristas');
+    }
+
+    // TELA DO MOTORISTA (painel simples)
+    static mostrarPainelMotorista(req, res) {
+        res.render('painel_motorista');
+    }
+
+    // VIAGENS DO MOTORISTA LOGADO
+    static async minhasViagens(req, res) {
+        try {
+            // pega o token do cookie ou do header
+            let token = req.cookies?.token;
+            if (!token) {
+                const authHeader = req.headers.authorization;
+                if (authHeader) token = authHeader.split(' ')[1];
+            }
+
+            const dados = jwt.verify(token, process.env.JWT_SECRET);
+            const usuarioId = dados.id;
+
+            // acha o motorista pelo usuario_id
+            const motoristas = await modelMotorista.listarMotoristas();
+            const motorista = motoristas.find(m => m.usuario_id === usuarioId);
+
+            if (!motorista) {
+                return res.status(404).json({ sucesso: false, mensagem: 'Motorista não encontrado.' });
+            }
+
+            // busca todas as viagens e filtra pelo id do motorista
+            const todasViagens = await modelViagem.listarViagens();
+            const minhas = todasViagens.filter(v => v.id_motorista === motorista.id);
+
+            return res.status(200).json({
+                sucesso: true,
+                nome: motorista.nome,
+                total: minhas.length,
+                dados: minhas
+            });
+
+        } catch (error) {
+            console.error('Erro ao buscar viagens do motorista:', error);
+            return res.status(500).json({
+                sucesso: false,
+                mensagem: 'Erro interno ao buscar viagens.',
+                erro: error.message
+            });
+        }
     }
 
     // LISTAR MOTORISTAS
