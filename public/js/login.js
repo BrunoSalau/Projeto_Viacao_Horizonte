@@ -119,11 +119,10 @@ form.addEventListener('submit', async (event)=>{
         
     }
 
-    //===============
     if(cpfInput.value && senhaInput.value && cpfValido && senhaValido){
         event.preventDefault();
     
-        const resposta = await fetch('/login', {
+        const resposta = await fetch('/usuario/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -140,13 +139,15 @@ form.addEventListener('submit', async (event)=>{
             alert(dados.mensagem);
             return;
         }
+        localStorage.setItem('token', dados.token);
+        localStorage.setItem('tipo', dados.tipo);
     
-        alert('Login realizado');
-    
-        window.location.href = '/login';
+        if (dados.tipo === 'Supervisor') {
+            window.location.href = '/veiculo';
+        } else {
+            window.location.href = '/motorista'; // tela mais simples do motorista
+        }
     }
-
-    //===========
 
 })
 

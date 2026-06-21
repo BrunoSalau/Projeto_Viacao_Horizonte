@@ -1,6 +1,7 @@
 import { modelUsuario } from '../model/usuarioModel.js';
 import { modelMotorista } from '../model/motoristaModel.js';
 import { modelSupervisor } from '../model/supervisorModel.js';
+import jwt from 'jsonwebtoken';
 
 export class controllerUsuario {
 
@@ -94,9 +95,25 @@ export class controllerUsuario {
                 });
             }
 
+            const token = jwt.sign(
+                { id: usuario.id, cpf: usuario.cpf, tipo: usuario.tipo_usuario },
+                process.env.JWT_SECRET,
+                { expiresIn: '8h' }
+            );
+
+            // salva o token também em cookie httpOnly, pra rotas de página (GET) funcionarem sem precisar mandar header
+            res.cookie('token', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'lax',
+                maxAge: 8 * 60 * 60 * 1000 // 8h, igual ao expiresIn do token
+            });
+
             return res.status(200).json({
                 sucesso: true,
-                mensagem: 'Login realizado com sucesso.'
+                mensagem: 'Login realizado com sucesso.',
+                token,
+                tipo: usuario.tipo_usuario
             });
 
         } catch (error) {
@@ -107,6 +124,15 @@ export class controllerUsuario {
                 erro: error.message
             });
         }
+    }
+
+    // LOGOUT
+    static logout(req, res) {
+        res.clearCookie('token');
+        return res.status(200).json({
+            sucesso: true,
+            mensagem: 'Logout realizado com sucesso.'
+        });
     }
 
     // DELETAR USUARIO

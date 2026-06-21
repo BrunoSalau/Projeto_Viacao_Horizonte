@@ -57,3 +57,10 @@
     });
 
 })();
+
+document.getElementById('btnLogout').addEventListener('click', async () => {
+    await fetch('/usuario/logout', { method: 'POST' });
+    localStorage.removeItem('token');
+    localStorage.removeItem('tipo');
+    window.location.href = '/';
+});

@@ -1,9 +1,10 @@
 import { controllerMotorista } from "../controllers/motorista.controller.js";
+import { protegerPagina } from "../middleware/auth.js";
 import express from 'express';
 
 const router = express.Router();
 
-router.get('/',controllerMotorista.mostrarTela);
+router.get('/', protegerPagina, controllerMotorista.mostrarTela);
 
 router.post('/',controllerMotorista.mostrarTela);
 

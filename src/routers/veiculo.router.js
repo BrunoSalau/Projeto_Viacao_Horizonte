@@ -1,10 +1,11 @@
 import { controllerVeiculo } from "../controllers/veiculo.controller.js";
+import { protegerPagina } from "../middleware/auth.js";
 
 import express from 'express';
 
 const router = express.Router();
 
-router.get('/',controllerVeiculo.telaVeiculo);
+router.get('/', protegerPagina, controllerVeiculo.telaVeiculo);
 
 router.post('/',controllerVeiculo.listarVeiculos)
 

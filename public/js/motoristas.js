@@ -48,6 +48,13 @@ document.getElementById('fecharErroPlacaBtn').addEventListener('click', () => {
     erroPlaca.style.display = 'none';
 });
 
+document.getElementById('btnLogout').addEventListener('click', async () => {
+    await fetch('/usuario/logout', { method: 'POST' });
+    localStorage.removeItem('token');
+    localStorage.removeItem('tipo');
+    window.location.href = '/';
+});
+
 // Fechar qualquer modal ao clicar fora do conteúdo
 window.addEventListener('click', (e) => {
     if (e.target === modal)     modal.style.display     = 'none';
@@ -232,7 +239,10 @@ document.getElementById('formAdicionar').addEventListener('submit', async (e) =>
 
         const resposta = await fetch('/usuario/criarUsuario', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
             body: JSON.stringify({ nome, cpf: cpfLimpo, senha, cnh, telefone, opcao: 'Motorista' })
         });
 
@@ -281,7 +291,10 @@ document.getElementById('formExcluir').addEventListener('submit', async (e) => {
         // 2. Confirmado que é motorista — prossegue com a exclusão
         const resposta = await fetch('/usuario/deletarUsuario', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
             body: JSON.stringify({ cpf })
         });
 

@@ -1,4 +1,5 @@
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import routes from './routers/web.js'
 import usuarioRouter   from './routers/usuario.router.js';
 import motoristaRouter from './routers/motorista.router.js';
@@ -18,6 +19,8 @@ app.set('views', `${import.meta.dirname}/views`);
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
+
+app.use(cookieParser());
 
 app.use(express.static('public'));
 
