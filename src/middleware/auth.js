@@ -42,3 +42,16 @@ export function protegerPagina(req, res, next) {
         return res.redirect('/');
     }
 }
+
+// Protege a página do motorista: exige token e tipo Motorista
+export function protegerPaginaMotorista(req, res, next) {
+    const token = req.cookies?.token;
+    if (!token) return res.redirect('/');
+    try {
+        const dados = jwt.verify(token, process.env.JWT_SECRET);
+        if (dados.tipo !== 'Motorista') return res.redirect('/');
+        next();
+    } catch {
+        return res.redirect('/');
+    }
+}

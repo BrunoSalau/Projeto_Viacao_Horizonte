@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/painel.css">
+</head>
+<body>
+
+    <!-- Botão hambúrguer (visível apenas em mobile) -->
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Overlay (mobile) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <main class="container-fluid min-vh-100 px-0">
+        <div class="row flex-nowrap g-0">
+
+            <!-- Sidebar -->
+            <aside id="barraLateral" class="min-vh-100 bg-dark2 sidebar">
+
+                <!-- Botão fechar (mobile) -->
+                <button class="close-btn" id="closeBtn" aria-label="Fechar menu">&#10005;</button>
+
+                <article class="sidebar-header p-4 m-1">
+                    <img class="img-fluid mb-3" id="img-vh" src="img/icons/vh.png" alt="Viação Horizonte">
+                    <div class="sidebar-brand-text">
+                        <h1 class="text-white p-0 m-0 fw-normal fs-6">V I A Ç Ã O</h1>
+                        <h1 class="text-yellow p-0 m-0 fw-bold fs-6">H O R I Z O N T E</h1>
+                        <p class="text-white2 p-0 m-0 mt-3 fs-7">Transportando destinos</p>
+                        <p class="text-white2 p-0 m-0 fs-7">conectando você</p>
+                    </div>
+                </article>
+
+                <section class="bg-dark3 rounded-4 fs-6 sidebar-nav-section" id="bar">
+                    <nav>
+                        <ul class="nav flex-column">
+                            
+                            <li class="nav-item">
+                                <a class="nav-link text-white p-0 m-3 nav-item-link" href="/motorista">
+                                     <img class="img-fluid nav-icon" src="img/icons/user (2).png" alt="Motoristas">
+                                    <span class="nav-label">Motoristas</span>
+                                </a>
+                            </li>
+                            
+
+                            <li class="nav-item">
+                                <a class="nav-link p-0 m-3 text-white nav-item-link" href="/veiculo">
+                                    <div class="troca-imagem">
+                                        <img class="img-fluid img nav-icon" src="img/icons/bus (2).png" alt="Veículos">                                    </div>
+                                    <span class="nav-label">Veículos</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-white p-0 m-3 nav-item-link" href="/rota">
+                                    <img class="img-fluid nav-icon" src="img/icons/rotes (2).png" alt="Rotas">
+                                    <span class="nav-label">Rotas</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-white p-0 m-3 nav-item-link" href="/viagem">
+                                    <img class="img-fluid nav-icon" src="img/icons/viagem (2).png" alt="Viagens">
+                                    <span class="nav-label">Viagens</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-white p-0 m-3 nav-item-link" href="/manutencao">
+                                    <img class="img-fluid nav-icon" src="img/icons/chave-inglesa (2).png" alt="Manutenções">
+                                    <span class="nav-label">Manutenções</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-white p-0 m-3 nav-item-link" href="/abastecimento">
+                                    <img class="img-fluid nav-icon" src="img/icons/gasolina (2).png" alt="Abastecimento">
+                                    <span class="nav-label">Abastecimento</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </section>
+
+            </aside>
+
+            <!-- Conteúdo principal -->
+            <section class="main-content bg-light flex-grow-1">
+                <nav class="container-fluid"> 
+                    <h2>Veículos</h2>
+                    
+                </nav>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -18,10 +18,32 @@ export class modelAbastecimento{
     static async listarAbastecimentos(){
     
         const result = await pool.query(
-            `SELECT * FROM abastecimento`
+            `SELECT
+                ab.id,
+                ab.id_veiculo,
+                ab.litros,
+                ab.valor,
+                ab.data_abastecimento,
+                ve.placa,
+                ve.modelo,
+                ve.marca
+            FROM abastecimento ab
+            LEFT JOIN veiculo ve ON ab.id_veiculo = ve.id
+            ORDER BY ab.data_abastecimento DESC, ab.id DESC`
         );
     
         return result.rows;
+    }
+
+    static async buscarAbastecimentoPorId(id){
+
+        const result = await pool.query(
+            `SELECT * FROM abastecimento
+            WHERE id = $1`,
+            [id]
+        );
+
+        return result.rows[0];
     }
 
     static async atualizarAbastecimento(id, id_veiculo, litros, valor, data_abastecimento){

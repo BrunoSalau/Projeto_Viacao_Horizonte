@@ -104,7 +104,7 @@ export class controllerUsuario {
                 userName = await modelSupervisor.buscarSupervisorCPF(usuario.cpf);
             }
             if(usuario.tipo_usuario == "Motorista"){
-                userName = await modelSupervisor.buscarMotoristaCPF(usuario.cpf);
+                userName = await modelMotorista.buscarMotoristaCPF(usuario.cpf);
             }
             if(usuario.tipo_usuario == "Admin"){
                 userName = { nome: "Admin Master" };  // ← Novo tipo tratado

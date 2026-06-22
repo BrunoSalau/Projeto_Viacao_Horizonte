@@ -139,13 +139,14 @@ form.addEventListener('submit', async (event)=>{
             alert(dados.mensagem);
             return;
         }
+
         localStorage.setItem('token', dados.token);
         localStorage.setItem('tipo', dados.tipo);
     /*
         if (dados.tipo === 'Supervisor') {
             window.location.href = '/veiculo';
         } else {
-            window.location.href = '/motorista'; // tela mais simples do motorista
+            window.location.href = '/veiculo';
         }
     }
     */
