@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import { controllerViagem } from '../controllers/viagem.controller.js';
+import { protegerPagina } from "../middleware/auth.js";
 
 const router = Router();
 
 // RENDERIZAR PÁGINA
-router.get('/', controllerViagem.telaViagem);
+router.get('/',protegerPagina, controllerViagem.telaViagem);
 
 // LISTAR VIAGENS
 router.get('/listar', controllerViagem.listarViagens);
