@@ -1,8 +1,8 @@
 let cpfSelecionadoDelete = null;
 
-        // ===== NAVEGAÇÃO ENTRE ABAS =====
+
         function abrirAba(nomeAba) {
-            // Esconde todas as abas
+
             document.querySelectorAll('.tab-content').forEach(el => {
                 el.classList.remove('active');
             });
@@ -10,17 +10,17 @@ let cpfSelecionadoDelete = null;
                 el.classList.remove('active');
             });
 
-            // Mostra a aba selecionada
+
             document.getElementById(nomeAba).classList.add('active');
             event.target.classList.add('active');
 
-            // Se for a aba de listar, carrega os supervisores
+
             if (nomeAba === 'listar') {
                 carregarSupervisores();
             }
         }
 
-        // ===== MÁSCARA DE CPF =====
+
         document.getElementById('cpf').addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
             if (value.length > 11) value = value.substring(0, 11);
@@ -34,7 +34,7 @@ let cpfSelecionadoDelete = null;
             e.target.value = value;
         });
 
-        // ===== CRIAR SUPERVISOR =====
+
         document.getElementById('formulario').addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -83,7 +83,7 @@ let cpfSelecionadoDelete = null;
             }
         });
 
-        // ===== LISTAR SUPERVISORES =====
+
         async function carregarSupervisores() {
             const loading = document.getElementById('loading-lista');
             const container = document.getElementById('supervisores-container');
@@ -107,7 +107,7 @@ let cpfSelecionadoDelete = null;
                             </div>
                             <div class="supervisor-actions">
                                 <button class="btn-delete" onclick="abrirModalDelete('${item.supervisor.cpf}', '${item.supervisor.nome}')">
-                                    🗑️ Deletar
+                                     Deletar
                                 </button>
                             </div>
                         </div>
@@ -115,7 +115,7 @@ let cpfSelecionadoDelete = null;
                 } else {
                     container.innerHTML = `
                         <div class="empty-state">
-                            <p>📭 Nenhum supervisor cadastrado ainda</p>
+                            <p> Nenhum supervisor cadastrado ainda</p>
                         </div>
                     `;
                 }
@@ -129,7 +129,7 @@ let cpfSelecionadoDelete = null;
             }
         }
 
-        // ===== MODAL DE DELETE =====
+
         function abrirModalDelete(cpf, nome) {
             cpfSelecionadoDelete = cpf;
             document.getElementById('nomeSupervisor').textContent = nome;
@@ -173,7 +173,7 @@ let cpfSelecionadoDelete = null;
             }
         }
 
-        // Fechar modal ao clicar fora
+        
         window.onclick = function(event) {
             const modal = document.getElementById('modalDelete');
             if (event.target === modal) {
@@ -181,7 +181,7 @@ let cpfSelecionadoDelete = null;
             }
         }
 
-        // ===== MENSAGENS =====
+        
         function mostrarMensagem(texto, tipo, elementId) {
             const div = document.getElementById(elementId);
             div.className = `message ${tipo}`;
@@ -192,7 +192,7 @@ let cpfSelecionadoDelete = null;
             }, 5000);
         }
 
-        // ===== LOGOUT =====
+        
         function logout() {
             fetch('/usuario/logout', { method: 'POST' })
                 .then(() => {
@@ -200,7 +200,7 @@ let cpfSelecionadoDelete = null;
                 });
         }
 
-        // Carregar supervisores quando a página abre na aba de listar
+        
         window.addEventListener('load', () => {
-            // Pode carregar automaticamente aqui se quiser
+            
         });

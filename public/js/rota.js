@@ -1,8 +1,6 @@
 mostrarRotas();
 
-/* =============================================
-   REFERÊNCIAS DOM
-   ============================================= */
+
 const grid      = document.querySelector('.vehicles-grid');
 const modal     = document.getElementById('modal');
 const modalEx   = document.getElementById('modalEx');
@@ -10,9 +8,7 @@ const modalEdit = document.getElementById('modalEdit');
 const erroPlaca = document.getElementById('erroPlaca');
 const excluirBtn = document.getElementById('excluirBtn');
 
-/* =============================================
-   PESQUISA LOCAL (filtra os cards já renderizados)
-   ============================================= */
+
 document.getElementById('btnPesquisar').addEventListener('click', filtrarRotas);
 document.getElementById('campoPesquisa').addEventListener('keyup', (e) => {
     if (e.key === 'Enter') filtrarRotas();
@@ -29,11 +25,8 @@ function filtrarRotas() {
 }
 
 
-/* =============================================
-   MODAIS — ABRIR / FECHAR
-   ============================================= */
 
-// Adicionar
+
 document.getElementById('abrirModal').addEventListener('click', () => {
     modal.style.display = 'block';
 });
@@ -41,7 +34,6 @@ document.getElementById('fecharModal').addEventListener('click', () => {
     modal.style.display = 'none';
 });
 
-// Excluir
 document.getElementById('abrirModalEx').addEventListener('click', () => {
     modalEx.style.display = 'block';
 });
@@ -49,7 +41,7 @@ document.getElementById('fecharModalEx').addEventListener('click', () => {
     modalEx.style.display = 'none';
 });
 
-// Editar
+
 document.getElementById('abrirModalEdit').addEventListener('click', () => {
     modalEdit.style.display = 'block';
 });
@@ -57,7 +49,7 @@ document.getElementById('fecharModalEdit').addEventListener('click', () => {
     modalEdit.style.display = 'none';
 });
 
-// Fechar feedback
+
 document.getElementById('fecharErroPlaca').addEventListener('click', () => {
     erroPlaca.style.display = 'none';
 });
@@ -72,17 +64,13 @@ document.getElementById('btnLogout').addEventListener('click', async () => {
     window.location.href = '/';
 });
 
-// Fechar ao clicar fora do conteúdo
+
 window.addEventListener('click', (e) => {
     if (e.target === modal)     modal.style.display     = 'none';
     if (e.target === modalEx)   modalEx.style.display   = 'none';
     if (e.target === modalEdit) modalEdit.style.display = 'none';
     if (e.target === erroPlaca) erroPlaca.style.display = 'none';
 });
-
-/* =============================================
-   MOSTRAR INFORMAÇÕES DO USUARIO
-   ============================================= */
 
     async function obterDadosUsuario() {
        const resposta = await fetch('/usuario/perfil');
@@ -103,9 +91,6 @@ window.addEventListener('click', (e) => {
    }
    obterDadosUsuario();
 
-/* =============================================
-   FEEDBACK POPUP
-   ============================================= */
 function exibirFeedback(status, mensagem) {
     const bgPop     = document.getElementById('bgPop');
     const msgTitulo = document.getElementById('msgTitulo');
@@ -125,16 +110,11 @@ function exibirFeedback(status, mensagem) {
     erroPlaca.style.display = 'block';
 }
 
-/* =============================================
-   LISTAR ROTAS
-   → POST /rota/listar
-   ============================================= */
 async function mostrarRotas() {
     const dados = await fetch('/rota/listar', {
         method: 'POST'
     });
 
-    // 404 significa lista vazia — não é erro real
     if (dados.status === 404) {
         grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px 0;">Nenhuma rota cadastrada.</div>';
         return;
@@ -186,11 +166,6 @@ async function mostrarRotas() {
     });
 }
 
-
-/* =============================================
-   CADASTRAR ROTA
-   → POST /rota/adicionar
-   ============================================= */
 document.getElementById('formAdicionar').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -221,10 +196,6 @@ document.getElementById('formAdicionar').addEventListener('submit', async (e) =>
     }
 });
 
-/* =============================================
-   EXCLUIR ROTA
-   → POST /rota/deletar
-   ============================================= */
 document.getElementById('formExcluir').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -251,13 +222,6 @@ document.getElementById('formExcluir').addEventListener('submit', async (e) => {
     }
 });
 
-/* =============================================
-   EDITAR ROTA
-   → PUT /rota/atualizar
-   Localiza pelo ID e atualiza os campos
-   preenchidos. Campos vazios mantêm o valor
-   atual buscado do banco antes de salvar.
-   ============================================= */
 document.getElementById('formEditar').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -267,7 +231,6 @@ document.getElementById('formEditar').addEventListener('submit', async (e) => {
     const distancia_km     = document.querySelector('#formEditar input[name="distancia_km"]').value.trim();
 
     try {
-        // 1. Busca os dados atuais da rota para não sobrescrever campos vazios com nulo
         const buscaResposta = await fetch('/rota/procurar', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -275,22 +238,16 @@ document.getElementById('formEditar').addEventListener('submit', async (e) => {
         });
 
         if (!buscaResposta.ok) {
-            // Se falhar a busca por origem/destino, tenta buscar pelo ID
-            // Como o procurar usa origem/destino, precisamos fazer uma busca diferente
-            // Por isso, para editar, usaremos os dados preenchidos direto
             if (!origem || !destino) {
                 exibirFeedback('erro', 'ID não encontrada. Verifique e tente novamente.');
                 return;
             }
         }
-
-        // Se conseguiu buscar, usa os dados atuais como fallback
         let atual = {};
         if (buscaResposta.ok) {
             atual = await buscaResposta.json();
         }
 
-        // 2. Monta o payload: usa o novo valor se preenchido, senão mantém o atual
         const payload = {
             id,
             origem:         origem         || atual.origem,
@@ -298,7 +255,6 @@ document.getElementById('formEditar').addEventListener('submit', async (e) => {
             distancia_km:   distancia_km   || atual.distancia_km
         };
 
-        // 3. Envia a atualização
         console.log('Payload enviado para atualizar:', payload);
 
         const resposta = await fetch('/rota/atualizar', {

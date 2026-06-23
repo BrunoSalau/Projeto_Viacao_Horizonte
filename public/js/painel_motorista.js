@@ -1,28 +1,20 @@
-/* =============================================
-   INICIALIZAÇÃO
-   ============================================= */
+
 const token = localStorage.getItem('token');
 
-// Exibe nome do motorista no topbar
 const nomeSalvo = localStorage.getItem('nomeMotorista');
 if (nomeSalvo) {
     document.getElementById('nomeMotorista').textContent = nomeSalvo;
     document.getElementById('avatarInicial').textContent = nomeSalvo.charAt(0).toUpperCase();
 }
 
-// Carrega as viagens ao abrir a página
 mostrarViagens();
 
-/* =============================================
-   REFERÊNCIAS DOM
-   ============================================= */
+
 const grid = document.getElementById('gridViagens');
 const modalEdit = document.getElementById('modalEdit');
 const erroPlaca = document.getElementById('erroPlaca');
 
-/* =============================================
-   BOTÃO SAIR
-   ============================================= */
+
 document.getElementById('btnLogout').addEventListener('click', async () => {
     try {
         await fetch('/usuario/logout', { method: 'POST' });
@@ -31,9 +23,7 @@ document.getElementById('btnLogout').addEventListener('click', async () => {
     window.location.href = '/';
 });
 
-/* =============================================
-   PESQUISA LOCAL
-   ============================================= */
+
 document.getElementById('btnPesquisar').addEventListener('click', filtrarViagens);
 document.getElementById('campoPesquisa').addEventListener('keyup', (e) => {
     if (e.key === 'Enter') filtrarViagens();
@@ -47,9 +37,7 @@ function filtrarViagens() {
     });
 }
 
-/* =============================================
-   MODAIS — ABRIR / FECHAR
-   ============================================= */
+
 document.getElementById('abrirModalEdit').addEventListener('click', () => {
     modalEdit.style.display = 'block';
     document.getElementById('resumoStatus').style.display = 'none';
@@ -72,9 +60,7 @@ window.addEventListener('click', (e) => {
     if (e.target === erroPlaca) erroPlaca.style.display = 'none';
 });
 
-/* =============================================
-   FEEDBACK POPUP
-   ============================================= */
+
 function exibirFeedback(sucesso, mensagem) {
     const bgPop = document.getElementById('bgPop');
     const msgTitulo = document.getElementById('msgTitulo');
@@ -94,9 +80,7 @@ function exibirFeedback(sucesso, mensagem) {
     erroPlaca.style.display = 'block';
 }
 
-/* =============================================
-   LISTAR VIAGENS DO MOTORISTA LOGADO
-   ============================================= */
+
 async function mostrarViagens() {
     try {
         const res = await fetch('/motorista/minhasViagens', {
@@ -176,18 +160,14 @@ async function mostrarViagens() {
     }
 }
 
-/* =============================================
-   UTILITÁRIO — FORMATAR DATA
-   ============================================= */
+
 function formatarData(dataISO) {
     if (!dataISO) return '--/--/----';
     const [ano, mes, dia] = dataISO.split('-');
     return `${dia}/${mes}/${ano}`;
 }
 
-/* =============================================
-   BUSCAR VIAGEM PARA ALTERAR STATUS
-   ============================================= */
+
 document.getElementById('btnBuscarStatus').addEventListener('click', async () => {
     const id = document.getElementById('inputIdStatus').value.trim();
 
@@ -246,9 +226,7 @@ document.getElementById('btnBuscarStatus').addEventListener('click', async () =>
     }
 });
 
-/* =============================================
-   INICIAR VIAGEM — Agendada → Em andamento
-   ============================================= */
+
 document.getElementById('btnIniciar').addEventListener('click', async (e) => {
     const id = e.target.dataset.viagemId;
 
@@ -273,9 +251,7 @@ document.getElementById('btnIniciar').addEventListener('click', async (e) => {
     }
 });
 
-/* =============================================
-   FINALIZAR VIAGEM — Em andamento → Finalizada
-   ============================================= */
+
 document.getElementById('btnFinalizar').addEventListener('click', async (e) => {
     const id = e.target.dataset.viagemId;
 
