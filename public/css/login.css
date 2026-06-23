@@ -7,7 +7,7 @@ body {
     height: 100vh; 
 }
 .img-glow {
-  /* Altere a cor do rgba() para a cor desejada do brilho */
+  
   box-shadow: 0 0 15px rgba(247, 242, 0, 0.911), 0 0 30px rgba(253, 249, 13, 0.4);
 }
 .bg-dark2{

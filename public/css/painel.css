@@ -1,6 +1,4 @@
-/* =============================================
-   VARIÁVEIS E BASE
-   ============================================= */
+
 :root {
     --sidebar-width-full: 220px;
     --sidebar-width-icons: 64px;
@@ -9,9 +7,7 @@
     --transition-speed: 0.3s;
 }
 
-/* =============================================
-   CORES E UTILITÁRIOS (preservados do original)
-   ============================================= */
+
 .bg-dark2 {
     background: var(--sidebar-bg);
 }
@@ -28,9 +24,7 @@
     font-size: 10px;
 }
 
-/* =============================================
-   LAYOUT PRINCIPAL
-   ============================================= */
+
 body {
     overflow-x: hidden;
 }
@@ -40,9 +34,7 @@ body {
     overflow: hidden;
 }
 
-/* =============================================
-   SIDEBAR — ESTADO PADRÃO (desktop largo)
-   ============================================= */
+
 .sidebar {
     width: var(--sidebar-width-full);
     min-width: var(--sidebar-width-full);
@@ -54,7 +46,7 @@ body {
     overflow: hidden;
 }
 
-/* Cabeçalho da sidebar */
+
 .sidebar-header {
     overflow: hidden;
 }
@@ -70,13 +62,13 @@ body {
     white-space: nowrap;
 }
 
-/* Seção de navegação */
+
 .sidebar-nav-section {
     margin: 0 8px;
     transition: margin var(--transition-speed) ease;
 }
 
-/* Item de menu: ícone + label lado a lado */
+
 .nav-item-link {
     display: flex !important;
     align-items: center;
@@ -104,7 +96,7 @@ body {
 
 .nav-icon {
     width: 25px;
-    min-width: 25px;   /* garante que o ícone nunca encolha */
+    min-width: 25px;   
     height: 25px;
     object-fit: contain;
     flex-shrink: 0;
@@ -118,17 +110,13 @@ body {
     opacity: 1;
 }
 
-/* Botões mobile — ocultos no desktop */
+
 .hamburger-btn,
 .close-btn {
     display: none;
 }
 
-/* =============================================
-   SIDEBAR — MODO SOMENTE ÍCONES
-   Ativa em telas onde a sidebar começaria a
-   comprimir o texto (≤ 900px)
-   ============================================= */
+
 @media (max-width: 900px) and (min-width: 577px) {
 
     .sidebar {
@@ -137,7 +125,7 @@ body {
         max-width: var(--sidebar-width-icons);
     }
 
-    /* Oculta os textos de marca */
+   
     .sidebar-brand-text {
         opacity: 0;
         pointer-events: none;
@@ -145,7 +133,7 @@ body {
         overflow: hidden;
     }
 
-    /* Centraliza o logo */
+  
     .sidebar-header {
         display: flex;
         justify-content: center;
@@ -158,14 +146,14 @@ body {
         max-width: 36px;
     }
 
-    /* Oculta labels dos itens do menu */
+    
     .nav-label {
         opacity: 0;
         max-width: 0;
         overflow: hidden;
     }
 
-    /* Centraliza ícones */
+  
     .nav-item-link {
         justify-content: center;
         margin: 8px auto !important;
@@ -176,19 +164,16 @@ body {
         margin: 0 4px;
     }
 
-    /* Tooltip nativo ao passar o mouse */
+   
     .nav-item-link[title] {
         position: relative;
     }
 }
 
-/* =============================================
-   SIDEBAR — MODO MOBILE (≤ 576px)
-   Sidebar oculta por padrão; abre como overlay
-   ============================================= */
+
 @media (max-width: 576px) {
 
-    /* Botão hambúrguer visível */
+    
     .hamburger-btn {
         display: flex;
         flex-direction: column;
@@ -215,7 +200,6 @@ body {
         transition: transform var(--transition-speed), opacity var(--transition-speed);
     }
 
-    /* Animação hambúrguer → X quando aberto */
     .hamburger-btn.is-open span:nth-child(1) {
         transform: translateY(7px) rotate(45deg);
     }
@@ -226,7 +210,7 @@ body {
         transform: translateY(-7px) rotate(-45deg);
     }
 
-    /* Overlay escuro atrás da sidebar */
+  
     .sidebar-overlay {
         display: none;
         position: fixed;
@@ -240,7 +224,7 @@ body {
         display: block;
     }
 
-    /* Sidebar posicionada fora da tela por padrão */
+    
     .sidebar {
         position: fixed;
         top: 0;
@@ -255,12 +239,12 @@ body {
         overflow-y: auto;
     }
 
-    /* Sidebar aberta */
+   
     .sidebar.is-open {
         transform: translateX(0);
     }
 
-    /* Botão fechar dentro da sidebar */
+   
     .close-btn {
         display: block;
         position: absolute;
@@ -282,8 +266,8 @@ body {
         background: rgba(255,255,255,0.1);
     }
 
-    /* Conteúdo principal ocupa tela inteira */
+    
     .main-content {
-        padding-top: 56px; /* espaço para o botão hambúrguer */
+        padding-top: 56px; 
     }
 }

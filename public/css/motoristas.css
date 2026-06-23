@@ -1,6 +1,4 @@
-/* =============================================
-   VARIÁVEIS E BASE
-   ============================================= */
+
 :root {
     --sidebar-width-full: 220px;
     --sidebar-width-icons: 64px;
@@ -9,9 +7,7 @@
     --transition-speed: 0.3s;
 }
 
-/* =============================================
-   CORES E UTILITÁRIOS
-   ============================================= */
+
 .bg-dark2 {
     background: var(--sidebar-bg);
 }
@@ -28,9 +24,7 @@
     font-size: 10px;
 }
 
-/* =============================================
-   LAYOUT PRINCIPAL
-   ============================================= */
+
 body {
     overflow-x: hidden;
 }
@@ -42,9 +36,7 @@ body {
     min-width: 0;
 }
 
-/* =============================================
-   SIDEBAR — ESTADO PADRÃO (desktop largo)
-   ============================================= */
+
 .sidebar {
     width: var(--sidebar-width-full);
     min-width: var(--sidebar-width-full);
@@ -122,9 +114,7 @@ body {
     display: none;
 }
 
-/* =============================================
-   SIDEBAR — MODO SOMENTE ÍCONES (≤ 900px)
-   ============================================= */
+
 @media (max-width: 900px) and (min-width: 577px) {
 
     .sidebar {
@@ -173,9 +163,6 @@ body {
     }
 }
 
-/* =============================================
-   TOPBAR
-   ============================================= */
 .topbar {
     display: flex;
     align-items: center;
@@ -299,9 +286,7 @@ body {
     color: #888;
 }
 
-/* =============================================
-   TOOLBAR (filtros + botões de ação)
-   ============================================= */
+
 .vehicles-toolbar {
     display: flex;
     align-items: center;
@@ -344,9 +329,7 @@ body {
 
 .btn-add-vehicle:hover { background: #e0b400; }
 
-/* =============================================
-   DRIVER GRID — mesmo padrão do vehicle grid
-   ============================================= */
+
 .vehicles-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -366,9 +349,7 @@ body {
     .vehicles-grid { grid-template-columns: 1fr; }
 }
 
-/* =============================================
-   DRIVER CARD
-   ============================================= */
+
 .vehicle-card {
     background: #fff;
     border-radius: 12px;
@@ -476,9 +457,7 @@ body {
 
 .btn-more:hover { color: #555; background: #f4f4f4; }
 
-/* =============================================
-   MODAIS
-   ============================================= */
+
 .modal {
     display: none;
     position: fixed;
