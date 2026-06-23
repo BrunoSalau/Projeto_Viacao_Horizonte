@@ -1,8 +1,5 @@
 mostrarVeiculos();
 
-/* =============================================
-   REFERÊNCIAS DOM
-   ============================================= */
 const grid      = document.querySelector('.vehicles-grid');
 const modal     = document.getElementById('modal');
 const modalEx   = document.getElementById('modalEx');
@@ -10,9 +7,6 @@ const modalEdit = document.getElementById('modalEdit');
 const erroPlaca = document.getElementById('erroPlaca');
 const excluirBtn = document.getElementById('excluirBtn');
 
-/* =============================================
-   PESQUISA LOCAL (filtra os cards já renderizados)
-   ============================================= */
 document.getElementById('btnPesquisar').addEventListener('click', filtrarVeiculos);
 document.getElementById('campoPesquisa').addEventListener('keyup', (e) => {
     if (e.key === 'Enter') filtrarVeiculos();
@@ -29,11 +23,6 @@ function filtrarVeiculos() {
 }
 
 
-/* =============================================
-   MODAIS — ABRIR / FECHAR
-   ============================================= */
-
-// Adicionar
 document.getElementById('abrirModal').addEventListener('click', () => {
     modal.style.display = 'block';
 });
@@ -41,7 +30,6 @@ document.getElementById('fecharModal').addEventListener('click', () => {
     modal.style.display = 'none';
 });
 
-// Excluir
 document.getElementById('abrirModalEx').addEventListener('click', () => {
     modalEx.style.display = 'block';
 });
@@ -49,7 +37,6 @@ document.getElementById('fecharModalEx').addEventListener('click', () => {
     modalEx.style.display = 'none';
 });
 
-// Editar
 document.getElementById('abrirModalEdit').addEventListener('click', () => {
     modalEdit.style.display = 'block';
 });
@@ -57,7 +44,6 @@ document.getElementById('fecharModalEdit').addEventListener('click', () => {
     modalEdit.style.display = 'none';
 });
 
-// Fechar feedback
 document.getElementById('fecharErroPlaca').addEventListener('click', () => {
     erroPlaca.style.display = 'none';
 });
@@ -65,7 +51,6 @@ document.getElementById('fecharErroPlacaBtn').addEventListener('click', () => {
     erroPlaca.style.display = 'none';
 });
 
-// Fechar ao clicar fora do conteúdo
 window.addEventListener('click', (e) => {
     if (e.target === modal)     modal.style.display     = 'none';
     if (e.target === modalEx)   modalEx.style.display   = 'none';
@@ -79,11 +64,6 @@ document.getElementById('btnLogout').addEventListener('click', async () => {
     localStorage.removeItem('tipo');
     window.location.href = '/';
 });
-
-/* =============================================
-   MOSTRAR INFORMAÇÕES DO USUARIO
-   ============================================= */
-
     async function obterDadosUsuario() {
        const resposta = await fetch('/usuario/perfil');
        const retorno = await resposta.json();
@@ -103,10 +83,6 @@ document.getElementById('btnLogout').addEventListener('click', async () => {
    }
    obterDadosUsuario();
 
-
-/* =============================================
-   FEEDBACK POPUP
-   ============================================= */
 function exibirFeedback(status, mensagem) {
     const bgPop     = document.getElementById('bgPop');
     const msgTitulo = document.getElementById('msgTitulo');
@@ -126,16 +102,11 @@ function exibirFeedback(status, mensagem) {
     erroPlaca.style.display = 'block';
 }
 
-/* =============================================
-   LISTAR VEÍCULOS
-   → POST /veiculo/listar
-   ============================================= */
 async function mostrarVeiculos() {
     const dados = await fetch('/veiculo/listar', {
         method: 'POST'
     });
 
-    // 404 significa lista vazia — não é erro real
     if (dados.status === 404) {
         grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px 0;">Nenhum veículo cadastrado.</div>';
         return;
@@ -148,7 +119,7 @@ async function mostrarVeiculos() {
 
     const veiculos = await dados.json();
 
-    // Mapeia o status do banco para a classe CSS e label corretos
+
     const badgeMap = {
         'disponivel':    { classe: 'badge-disponivel', label: 'Disponível' },
         'em operacao':   { classe: 'badge-operacao',   label: 'Em operação' },
@@ -195,10 +166,6 @@ async function mostrarVeiculos() {
 }
 
 
-/* =============================================
-   CADASTRAR VEÍCULO
-   → POST /veiculo/adicionar
-   ============================================= */
 document.getElementById('formAdicionar').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -232,10 +199,6 @@ document.getElementById('formAdicionar').addEventListener('submit', async (e) =>
     }
 });
 
-/* =============================================
-   EXCLUIR VEÍCULO
-   → POST /veiculo/deletar
-   ============================================= */
 document.getElementById('formExcluir').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -262,13 +225,6 @@ document.getElementById('formExcluir').addEventListener('submit', async (e) => {
     }
 });
 
-/* =============================================
-   EDITAR VEÍCULO
-   → PUT /veiculo/atualizar
-   Localiza pelo placa e atualiza os campos
-   preenchidos. Campos vazios mantêm o valor
-   atual buscado do banco antes de salvar.
-   ============================================= */
 document.getElementById('formEditar').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -280,7 +236,6 @@ document.getElementById('formEditar').addEventListener('submit', async (e) => {
     const quilometragem       = document.querySelector('#formEditar input[name="quilometragem"]').value.trim();
     const status              = document.querySelector('#formEditar select[name="status"]').value;
 
-    // 1. Busca os dados atuais do veículo para não sobrescrever campos vazios com nulo
     const buscaResposta = await fetch('/veiculo/procurar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -294,7 +249,6 @@ document.getElementById('formEditar').addEventListener('submit', async (e) => {
 
     const atual = await buscaResposta.json();
 
-    // 2. Monta o payload: usa o novo valor se preenchido, senão mantém o atual
     const payload = {
         placa,
         modelo:                 modelo        || atual.modelo,
@@ -305,7 +259,6 @@ document.getElementById('formEditar').addEventListener('submit', async (e) => {
         status:                 status        || atual.status,
     };
 
-    // 3. Envia a atualização
     console.log('Payload enviado para atualizar:', payload);
 
     const resposta = await fetch('/veiculo/atualizar', {

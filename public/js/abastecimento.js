@@ -1,9 +1,7 @@
 mostrarAbastecimentos();
 carregarVeiculos();
 
-/* =============================================
-   REFERÊNCIAS DOM
-   ============================================= */
+
 const grid              = document.querySelector('.vehicles-grid');
 const modal              = document.getElementById('modal');
 const modalEx            = document.getElementById('modalEx');
@@ -13,9 +11,6 @@ const excluirBtn         = document.getElementById('excluirBtn');
 const selectVeiculo      = document.getElementById('selectVeiculo');
 const selectVeiculoEdit  = document.getElementById('selectVeiculoEdit');
 
-/* =============================================
-   PESQUISA LOCAL (filtra os cards já renderizados)
-   ============================================= */
 document.getElementById('btnPesquisar').addEventListener('click', filtrarAbastecimentos);
 document.getElementById('campoPesquisa').addEventListener('keyup', (e) => {
     if (e.key === 'Enter') filtrarAbastecimentos();
@@ -32,11 +27,7 @@ function filtrarAbastecimentos() {
 }
 
 
-/* =============================================
-   MODAIS — ABRIR / FECHAR
-   ============================================= */
 
-// Adicionar
 document.getElementById('abrirModal').addEventListener('click', () => {
     modal.style.display = 'block';
 });
@@ -44,7 +35,7 @@ document.getElementById('fecharModal').addEventListener('click', () => {
     modal.style.display = 'none';
 });
 
-// Excluir
+
 document.getElementById('abrirModalEx').addEventListener('click', () => {
     modalEx.style.display = 'block';
 });
@@ -52,7 +43,7 @@ document.getElementById('fecharModalEx').addEventListener('click', () => {
     modalEx.style.display = 'none';
 });
 
-// Editar
+
 document.getElementById('abrirModalEdit').addEventListener('click', () => {
     modalEdit.style.display = 'block';
 });
@@ -60,7 +51,7 @@ document.getElementById('fecharModalEdit').addEventListener('click', () => {
     modalEdit.style.display = 'none';
 });
 
-// Fechar feedback
+
 document.getElementById('fecharErroPlaca').addEventListener('click', () => {
     erroPlaca.style.display = 'none';
 });
@@ -68,7 +59,7 @@ document.getElementById('fecharErroPlacaBtn').addEventListener('click', () => {
     erroPlaca.style.display = 'none';
 });
 
-// Fechar ao clicar fora do conteúdo
+
 window.addEventListener('click', (e) => {
     if (e.target === modal)     modal.style.display     = 'none';
     if (e.target === modalEx)   modalEx.style.display   = 'none';
@@ -76,9 +67,7 @@ window.addEventListener('click', (e) => {
     if (e.target === erroPlaca) erroPlaca.style.display = 'none';
 });
 
-/* =============================================
-   FEEDBACK POPUP
-   ============================================= */
+
 function exibirFeedback(status, mensagem) {
     const bgPop     = document.getElementById('bgPop');
     const msgTitulo = document.getElementById('msgTitulo');
@@ -98,10 +87,7 @@ function exibirFeedback(status, mensagem) {
     erroPlaca.style.display = 'block';
 }
 
-/* =============================================
-   CARREGAR VEÍCULOS PARA OS SELECTS
-   → POST /veiculo/listar
-   ============================================= */
+
 async function carregarVeiculos() {
     try {
         const resposta = await fetch('/veiculo/listar', {
@@ -133,10 +119,7 @@ async function carregarVeiculos() {
     }
 }
 
-/* =============================================
-   LISTAR ABASTECIMENTOS
-   → POST /abastecimento/listar
-   ============================================= */
+
 async function mostrarAbastecimentos() {
     const dados = await fetch('/abastecimento/listar', {
         method: 'POST'
@@ -209,10 +192,7 @@ async function mostrarAbastecimentos() {
 }
 
 
-/* =============================================
-   CADASTRAR ABASTECIMENTO
-   → POST /abastecimento/adicionar
-   ============================================= */
+
 document.getElementById('formAdicionar').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -244,10 +224,7 @@ document.getElementById('formAdicionar').addEventListener('submit', async (e) =>
     }
 });
 
-/* =============================================
-   EXCLUIR ABASTECIMENTO
-   → POST /abastecimento/deletar
-   ============================================= */
+
 document.getElementById('formExcluir').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -274,13 +251,7 @@ document.getElementById('formExcluir').addEventListener('submit', async (e) => {
     }
 });
 
-/* =============================================
-   EDITAR ABASTECIMENTO
-   → PUT /abastecimento/atualizar
-   Localiza pelo ID e atualiza os campos
-   preenchidos. Campos vazios mantêm o valor
-   atual buscado do banco antes de salvar.
-   ============================================= */
+
 document.getElementById('formEditar').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -291,7 +262,7 @@ document.getElementById('formEditar').addEventListener('submit', async (e) => {
     const data_abastecimento  = document.querySelector('#formEditar input[name="data_abastecimento"]').value;
 
     try {
-        // 1. Busca os dados atuais do abastecimento para não sobrescrever campos vazios com nulo
+
         const buscaResposta = await fetch('/abastecimento/procurar', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -305,7 +276,7 @@ document.getElementById('formEditar').addEventListener('submit', async (e) => {
 
         const atual = await buscaResposta.json();
 
-        // 2. Monta o payload: usa o novo valor se preenchido, senão mantém o atual
+
         const payload = {
             id,
             id_veiculo:         id_veiculo         || atual.id_veiculo,
@@ -314,7 +285,7 @@ document.getElementById('formEditar').addEventListener('submit', async (e) => {
             data_abastecimento:  data_abastecimento || atual.data_abastecimento
         };
 
-        // 3. Envia a atualização
+
         console.log('Payload enviado para atualizar:', payload);
 
         const resposta = await fetch('/abastecimento/atualizar', {

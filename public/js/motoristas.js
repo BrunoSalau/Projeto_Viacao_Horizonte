@@ -1,22 +1,16 @@
-/* =============================================
-   INICIALIZAÇÃO
-   ============================================= */
+
 mostrarMotoristas();
 
-/* =============================================
-   REFERÊNCIAS DOM
-   ============================================= */
+
 const grid      = document.getElementById('gridMotoristas');
 const modal     = document.getElementById('modal');
 const modalEx   = document.getElementById('modalEx');
 const modalEdit = document.getElementById('modalEdit');
 const erroPlaca = document.getElementById('erroPlaca');
 
-/* =============================================
-   MODAIS — ABRIR / FECHAR
-   ============================================= */
 
-// Adicionar
+
+
 document.getElementById('abrirModal').addEventListener('click', () => {
     modal.style.display = 'block';
 });
@@ -24,7 +18,7 @@ document.getElementById('fecharModal').addEventListener('click', () => {
     modal.style.display = 'none';
 });
 
-// Excluir
+
 document.getElementById('abrirModalEx').addEventListener('click', () => {
     modalEx.style.display = 'block';
 });
@@ -32,7 +26,7 @@ document.getElementById('fecharModalEx').addEventListener('click', () => {
     modalEx.style.display = 'none';
 });
 
-// Editar
+
 document.getElementById('abrirModalEdit').addEventListener('click', () => {
     modalEdit.style.display = 'block';
 });
@@ -40,7 +34,7 @@ document.getElementById('fecharModalEdit').addEventListener('click', () => {
     modalEdit.style.display = 'none';
 });
 
-// Fechar feedback
+
 document.getElementById('fecharErroPlaca').addEventListener('click', () => {
     erroPlaca.style.display = 'none';
 });
@@ -55,16 +49,14 @@ document.getElementById('btnLogout').addEventListener('click', async () => {
     window.location.href = '/';
 });
 
-// Fechar qualquer modal ao clicar fora do conteúdo
+
 window.addEventListener('click', (e) => {
     if (e.target === modal)     modal.style.display     = 'none';
     if (e.target === modalEx)   modalEx.style.display   = 'none';
     if (e.target === modalEdit) modalEdit.style.display = 'none';
     if (e.target === erroPlaca) erroPlaca.style.display = 'none';
 });
-/* =============================================
-   MOSTRAR INFORMAÇÕES DO USUARIO
-   ============================================= */
+
 
     async function obterDadosUsuario() {
        const resposta = await fetch('/usuario/perfil');
@@ -85,9 +77,7 @@ window.addEventListener('click', (e) => {
    }
    obterDadosUsuario();
 
-/* =============================================
-   FEEDBACK POPUP
-   ============================================= */
+
 function exibirFeedback(status, mensagem) {
     const bgPop     = document.getElementById('bgPop');
     const msgTitulo = document.getElementById('msgTitulo');
@@ -108,9 +98,7 @@ function exibirFeedback(status, mensagem) {
     erroPlaca.style.display = 'block';
 }
 
-/* =============================================
-   UTILITÁRIO — INICIAIS DO NOME
-   ============================================= */
+
 function obterIniciais(nome) {
     if (!nome) return '?';
     const partes = nome.trim().split(' ');
@@ -118,23 +106,14 @@ function obterIniciais(nome) {
     return (partes[0][0] + partes[partes.length - 1][0]).toUpperCase();
 }
 
-/* =============================================
-   VALIDAÇÃO DE CPF (algoritmo oficial Receita Federal)
-   - Remove pontuação
-   - Rejeita CPFs com todos os dígitos iguais (ex: 111.111.111-11)
-   - Calcula e confere os dois dígitos verificadores
-   ============================================= */
+
 function validarCPF(cpf) {
-    // Mantém apenas dígitos
     cpf = cpf.replace(/\D/g, '');
 
-    // Deve ter exatamente 11 dígitos
     if (cpf.length !== 11) return false;
 
-    // Rejeita sequências iguais (000...0, 111...1, etc.)
     if (/^(\d)\1{10}$/.test(cpf)) return false;
 
-    // Cálculo do 1º dígito verificador
     let soma = 0;
     for (let i = 0; i < 9; i++) {
         soma += parseInt(cpf[i]) * (10 - i);
@@ -143,7 +122,6 @@ function validarCPF(cpf) {
     if (resto === 10 || resto === 11) resto = 0;
     if (resto !== parseInt(cpf[9])) return false;
 
-    // Cálculo do 2º dígito verificador
     soma = 0;
     for (let i = 0; i < 10; i++) {
         soma += parseInt(cpf[i]) * (11 - i);
@@ -155,17 +133,13 @@ function validarCPF(cpf) {
     return true;
 }
 
-/* =============================================
-   LISTAR MOTORISTAS
-   → GET /motorista/listarMotoristas (controllerMotorista)
-   ============================================= */
+
 async function mostrarMotoristas() {
     try {
         const resposta = await fetch('/motorista/listarMotoristas', {
             method: 'GET'
         });
 
-        // 404 do controller significa lista vazia — não é um erro real
         if (resposta.status === 404) {
             grid.insertAdjacentHTML('beforeend', `
                 <div style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px 0;">
@@ -177,7 +151,6 @@ async function mostrarMotoristas() {
 
         const dados = await resposta.json();
 
-        // Qualquer outro status não-ok (500, 401, etc.) é erro de verdade
         if (!resposta.ok) {
             exibirFeedback(false, dados.mensagem || 'Erro ao carregar motoristas.');
             return;
@@ -228,12 +201,7 @@ async function mostrarMotoristas() {
     }
 }
 
-/* =============================================
-   CADASTRAR MOTORISTA
-   → POST /usuario/criarUsuario (controllerUsuario)
-   Envia opcao: 'Motorista' para que o controller
-   crie o usuário + registro de motorista juntos.
-   ============================================= */
+
 document.getElementById('formAdicionar').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -243,20 +211,17 @@ document.getElementById('formAdicionar').addEventListener('submit', async (e) =>
     const cnh      = document.querySelector('#formAdicionar input[name="cnh"]').value.trim();
     const telefone = document.querySelector('#formAdicionar input[name="telefone"]').value.trim();
 
-    // --- Validação de CPF ---
     if (!validarCPF(cpf)) {
         exibirFeedback(false, 'CPF inválido. Verifique os números digitados.');
         return;
     }
 
-    // --- Validação de senha (mínimo 5 caracteres) ---
     if (senha.length < 5) {
         exibirFeedback(false, 'A senha deve ter no mínimo 5 caracteres.');
         return;
     }
 
     try {
-        // Remove pontuação do CPF antes de enviar
         const cpfLimpo = cpf.replace(/\D/g, '');
 
         const resposta = await fetch('/usuario/criarUsuario', {
@@ -284,33 +249,25 @@ document.getElementById('formAdicionar').addEventListener('submit', async (e) =>
     }
 });
 
-/* =============================================
-   EXCLUIR MOTORISTA
-   → POST /usuario/deletarUsuario (controllerUsuario)
-   O controller identifica que é Motorista pelo CPF
-   e remove tanto o usuário quanto o motorista.
-   ============================================= */
+
 document.getElementById('formExcluir').addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const cpf = document.querySelector('#formExcluir input[name="cpf"]').value.trim();
 
     try {
-        // 1. Verifica se o CPF pertence a um motorista antes de qualquer exclusão
         const verificacao = await fetch('/motorista/buscarMotorista', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ cpf })
         });
 
-        // CPF não encontrado na tabela de motoristas — pode ser supervisor ou inexistente
         if (!verificacao.ok) {
             modalEx.style.display = 'none';
             exibirFeedback(false, 'CPF não encontrado na lista de motoristas. Nenhum dado foi removido.');
             return;
         }
 
-        // 2. Confirmado que é motorista — prossegue com a exclusão
         const resposta = await fetch('/usuario/deletarUsuario', {
             method: 'POST',
             headers: {
@@ -336,12 +293,7 @@ document.getElementById('formExcluir').addEventListener('submit', async (e) => {
     }
 });
 
-/* =============================================
-   EDITAR MOTORISTA
-   → PUT /motorista/atualizarMotorista (controllerMotorista)
-   Atualiza apenas os dados da tabela motorista
-   (nome, cnh, telefone) sem mexer no usuário.
-   ============================================= */
+
 document.getElementById('formEditar').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -358,7 +310,6 @@ document.getElementById('formEditar').addEventListener('submit', async (e) => {
             body: JSON.stringify({ cpf })
         });
 
-        // CPF não encontrado na tabela de motoristas — pode ser supervisor ou inexistente
         if (!verificacao.ok) {
             modalEx.style.display = 'none';
             exibirFeedback(false, 'CPF não encontrado na lista de motoristas. Nenhum dado foi removido.');
@@ -388,9 +339,7 @@ document.getElementById('formEditar').addEventListener('submit', async (e) => {
     }
 });
 
-/* =============================================
-   PESQUISA LOCAL (filtra os cards já renderizados)
-   ============================================= */
+
 document.getElementById('btnPesquisar').addEventListener('click', filtrarMotoristas);
 document.getElementById('campoPesquisa').addEventListener('keyup', (e) => {
     if (e.key === 'Enter') filtrarMotoristas();

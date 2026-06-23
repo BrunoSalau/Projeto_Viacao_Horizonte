@@ -142,15 +142,6 @@ form.addEventListener('submit', async (event)=>{
 
         localStorage.setItem('token', dados.token);
         localStorage.setItem('tipo', dados.tipo);
-    /*
-        if (dados.tipo === 'Supervisor') {
-            window.location.href = '/veiculo';
-        } else {
-            window.location.href = '/veiculo';
-        }
-    }
-    */
-   // Se for motorista, busca o nome antes de redirecionar
         if (dados.tipo === 'Motorista') {
             try {
                 const resNome = await fetch('/motorista/minhasViagens', {
@@ -161,7 +152,6 @@ form.addEventListener('submit', async (event)=>{
                     localStorage.setItem('nomeMotorista', dadosMotorista.nome);
                 }
             } catch(e) {
-                // não bloqueia o login se falhar
             }
             window.location.href = '/motorista/painel';
         } 
